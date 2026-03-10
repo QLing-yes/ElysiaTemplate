@@ -1,5 +1,5 @@
 import path from "node:path"
-import { filterFile, write } from "@/utils/nodejs_file"
+import { filterFile, write } from "@/app/utils/nodejs_file"
 
 /** 自动注册控制器 */
 export default function generate(op: {
@@ -11,6 +11,8 @@ export default function generate(op: {
     prefix?: string
 }) {
     const files = filterFile(op.fromDir, /\.ctrl\.tsx?$/)
+    console.log(files);
+    
     const ctrl = write(op.target)
     const fromDirReg = new RegExp(`^${op.fromDir}`)
 
@@ -26,7 +28,6 @@ export default function generate(op: {
         const route = imp
             .replace(fromDirReg, "")
             .replace(/(\/)?\.ctrl$/, "")
-            .replace('/controller', '')
         useStr += `\n .group("${route}",app=>app.use(${field}))`
     })
     ctrl.write(`\nconst app = new Elysia({ name: __filename, prefix:"${op.prefix || ''}" })\n`)
