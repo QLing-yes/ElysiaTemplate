@@ -1,5 +1,5 @@
 # 在 “bun run” 之前运行的脚本
-# preload = ["./support/script/index.ts"]
+# preload = ["./support/script/index.ts"] #遇到问题，先注释掉
 # 遥测
 telemetry = false
 # 设置日志级别
