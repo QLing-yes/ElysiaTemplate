@@ -1,3 +1,5 @@
+[English](./README-en.md) | [中文](./README.md)
+
 - MVC backend, auto route & middleware, more coming.
 
 ## 快速开始
@@ -67,7 +69,7 @@ app/controller/
 
 | 目录 | 说明 |
 |------|------|
-| `app/controller` | 控制器层，处理请求逻辑，支持自动加载和中间件作用域 |
+| `app/controller` | 控制器层，支持自动加载路由和中间件 |
 | `app/lib` | 基础库封装（数据库、缓存等） |
 | `app/utils` | 工具函数 |
 | `prisma` | 数据库模型和迁移 |

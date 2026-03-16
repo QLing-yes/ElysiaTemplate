@@ -20,7 +20,7 @@
     ".env": "*.env, .env.*, env.d.ts",
     "dockerfile": ".dockerignore, dockerfile*",
     "package.json": "tsconfig.json,bunfig.toml,prisma.config.ts,.npmrc,*.lock,*lock.json,.gitignore,LICENSE,biome.json*,.biomeignore",
-    "README.md":"AGENTS.md"
+    "README.md":"README*.md,AGENTS.md"
   },
   "workbench.colorCustomizations": {
     "sash.hoverBorder": "#5c0da1",
