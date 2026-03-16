@@ -46,6 +46,7 @@ bun.lockb
 *.swo
 *~
 
+.trae/
 .agents/
 
 # cache
