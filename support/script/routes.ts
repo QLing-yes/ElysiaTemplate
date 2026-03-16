@@ -31,8 +31,10 @@ function generatePlugin(
 	childs: number[],
 	prefix: string,
 ): string {
-	const opts = name ? `{ prefix: "${name}" }` : "{}";
-	let code = `\n/** ${fullPath} */\nconst ${prefix}${idx} = () => new Elysia(${opts})`;
+	const opts = name
+		? `{ prefix: "${name}", name: "${fullPath}" }`
+		: `{ name: "${fullPath}" }`;
+	let code = `\nconst ${prefix}${idx} = () => new Elysia(${opts})`;
 	mods.forEach((i) => (code += `\n\t.use(mod_${i})`));
 	childs.forEach((id) => (code += `\n\t.use(${prefix}${id}())`));
 	return code;

@@ -48,18 +48,18 @@ Project/
 - 运行 `bun run generate` 更新导入，或重新启动项目
 
 ### 中间件作用域
-- `middleware.ts` 的影响范围仅限于当前目录及其下游子目录
+- `middleware.ts` 的影响范围仅限于当前目录及其下游子目录，前提是使用`{ as:'scoped' }`选项
 
 ### 示例
 ```
 app/controller/
-├── middleware.ts        # 全局中间件 → 影响所有路由
+├── middleware.ts        # 中间件
 ├── user.ctrl.ts         # 用户路由
 └── admin/
-    ├── middleware.ts    # 后台中间件 → 仅影响 admin 及其下游
+    ├── middleware.ts    # 中间件
     ├── user.ctrl.ts    # 后台用户路由
     └── admin_sub/
-        ├── middleware.ts  # 子模块中间件 → 仅影响 admin_sub 及其下游
+        ├── middleware.ts  # 中间件
         └── user.ctrl.ts   # 子模块用户路由
 ```
 
