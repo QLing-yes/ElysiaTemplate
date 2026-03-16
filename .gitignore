@@ -46,6 +46,8 @@ bun.lockb
 *.swo
 *~
 
+.agents/
+
 # cache
 .cache/
 *.tsbuildinfo

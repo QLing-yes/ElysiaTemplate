@@ -1,11 +1,22 @@
-性能极致化，使用简单，通用性强，增强可读性，以上准则不变情况下简化代码。保证可读性时尽量减少行数，长代码该该换行还是要。
-能使用function就尽量不使用const。
-入参和返回的字段增加注释 /** **/
+# 项目
+请参考package.json确定技术栈。
 
----
-name: elysiajs
-description: 根据文档、文档、elysiajs、elysia、bun
----
+# 规则
+核心准则：性能极致、复用性强、可读性高、易维护、逻辑≤2 层嵌套、分区分块。
+语法：优先 let 不用 var，不可变对象使用const，函数不使用const。
+TypeScript：所有入参、返回值，字段以 /** */ 方式注释介绍。
+格式：正常换行，简化代码。
+文档：请参考下面的 skills、llms、llms-full、MCP。
 
-请使用 deepwiki mcp、context7 mcp、bun mcp 结果参考回答。
-elysiajs文档git库：https://github.com/elysiajs/documentation
+# MCP
+如果存在以下相关MCP服务，请使用相关服务查阅信息。
+deepwiki、context7、elysiajs、Bun。
+
+# skills
+请参考目录".agents\skills\elysiajs"
+
+## llms
+https://elysiajs.com/llms.txt
+
+## llms-full
+https://elysiajs.com/llms-full.txt
