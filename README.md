@@ -81,3 +81,55 @@ bunx skills add elysiajs/skills
 
 - [llms](https://elysiajs.com/llms.txt)
 - [llms-full](https://elysiajs.com/llms-full.txt)
+
+## MCP推荐
+```
+{
+  "mcpServers": {
+    // 任何GitHub项目转变为文档中心
+    "名称": {
+      "url": "https://gitmcp.io/{作者}/{仓库}"
+    },
+    // elysia 文档
+    "elysia": {
+      "url": "https://gitmcp.io/elysiajs/documentation"
+    },
+    // Bun 文档
+    "bun": {
+      "url": "https://bun.com/docs/mcp",
+    },
+    // 代码库上下文理解服务
+    "context7": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@upstash/context7-mcp",
+        "--api-key",
+        "你的密钥"
+      ]
+    },
+    // 代码库深度理解服务
+    "deepwiki": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "mcp-deepwiki@latest"
+      ]
+    },
+    // Chrome 开发者工具集成
+    "chrome-devtools": {
+      "command": "npx",
+      "args": [
+        "chrome-devtools-mcp@latest"
+      ]
+    },
+    // Playwright 浏览器自动化
+    "playwright": {
+      "command": "npx",
+      "args": [
+        "@playwright/mcp@latest"
+      ]
+    }
+  }
+}
+```

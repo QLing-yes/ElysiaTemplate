@@ -1,22 +1,14 @@
 # 项目
-请参考package.json确定技术栈。
+请参考package.json确定技术栈
 
 # 规则
-核心准则：性能极致、复用性强、可读性高、易维护、逻辑≤2 层嵌套、分区分块。
-语法：优先 let 不用 var，不可变对象使用const，函数不使用const。
-TypeScript：所有入参、返回值，字段以 /** */ 方式注释介绍。
-格式：正常换行，简化代码。
-文档：请参考下面的 skills、llms、llms-full、MCP。
+代码准则：极致性能、高复用性、高可读性、易维护，逻辑嵌套≤3 层，分区分块编写
+语法规范：优先使用let、禁用var；不可变对象用const；函数不使用const声明
+规范：所有入参、返回值、字段、函数，必须通过/** */添加 JSDoc 注释
+格式：合理换行，代码精简无冗余
 
-# MCP
-如果存在以下相关MCP服务，请使用相关服务查阅信息。
-deepwiki、context7、elysiajs、Bun。
-
-# skills
-请参考目录".agents\skills\elysiajs"
-
-## llms
-https://elysiajs.com/llms.txt
-
-## llms-full
-https://elysiajs.com/llms-full.txt
+# 信息参考优先级
+根据问题关键词使用MCP: `elysia`、`bun`、`deepwiki`、`context7`。
+技能参考：`./agents/skills/elysiajs`目录
+官方文档：`https://elysiajs.com/llms.txt`、`https://elysiajs.com/llms-full.txt`、`https://github.com/elysiajs/documentation`
+项目文档：参考项目内所有 markdown 文件（排除 node_modules 目录）
