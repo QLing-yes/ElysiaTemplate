@@ -1,6 +1,8 @@
 [English](./README-en.md) | [中文](./README.md)
 
-- MVC backend, auto route & middleware, more coming.
+## 非正式版本
+
+- MVC backend, auto route, End-to-End Type Safety , more coming.
 
 ## 快速开始
 
@@ -14,7 +16,7 @@ bun i
 bun run menu    # 启动命令菜单
 bun run dev     # 启动开发服务器
 bun run fix     # 修复代码风格
-bun run generate  # 生成和注册路由、中间件、prisma
+bun run generate  # 生成和注册路由、prisma
 ```
 
 ## 项目结构
@@ -46,30 +48,24 @@ Project/
 ## controller 目录介绍
 
 ### 自动加载
-- 目录下的 `middleware.ts` 和 `*.ctrl.ts` 文件都会自动加载
+- 目录下的 `*ctrl.ts` 文件都会自动加载
 - 运行 `bun run generate` 更新导入，或重新启动项目
-
-### 中间件作用域
-- `middleware.ts` 的影响范围仅限于当前目录及其下游子目录，前提是使用`{ as:'scoped' }`选项
 
 ### 示例
 ```
 app/controller/
-├── middleware.ts        # 中间件
-├── user.ctrl.ts         # 用户路由
+├── user.ctrl.ts
 └── admin/
-    ├── middleware.ts    # 中间件
-    ├── user.ctrl.ts    # 后台用户路由
+    ├── user.ctrl.ts
     └── admin_sub/
-        ├── middleware.ts  # 中间件
-        └── user.ctrl.ts   # 子模块用户路由
+        └── user.ctrl.ts
 ```
 
 ## 模块说明
 
 | 目录 | 说明 |
 |------|------|
-| `app/controller` | 控制器层，支持自动加载路由和中间件 |
+| `app/controller` | 控制器层，支持自动加载路由 |
 | `app/lib` | 基础库封装（数据库、缓存等） |
 | `app/utils` | 工具函数 |
 | `prisma` | 数据库模型和迁移 |

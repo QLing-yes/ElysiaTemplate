@@ -32,7 +32,7 @@ function generatePlugin(
 	prefix: string,
 ): string {
 	const opts = name
-		? `{ prefix: "${name}", name: "${fullPath}" }`
+		? `{ prefix: "${name}", name: "${fullPath}" + __filename }`
 		: `{ name: "${fullPath}" }`;
 	let code = `\nconst ${prefix}${idx} = () => new Elysia(${opts})`;
 	mods.forEach((i) => (code += `\n\t.use(mod_${i})`));
@@ -104,7 +104,7 @@ function buildChildren(
 }
 
 const DEFAULT_CONFIG = {
-	suffix: ["middleware.ts", "ctrl.ts"],
+	suffix: ["ctrl.ts"],
 	output: {
 		comment: "//auto generated",
 		import: 'import Elysia from "elysia";',

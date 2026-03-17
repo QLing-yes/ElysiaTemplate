@@ -5,6 +5,7 @@
     "": {
       "name": "elysia_backend",
       "dependencies": {
+        "@elysiajs/eden": "1.4.8",
         "@elysiajs/openapi": "1.4.14",
         "@elysiajs/static": "1.4.7",
         "@prisma/adapter-mariadb": "7.4.2",
@@ -53,6 +54,8 @@
     "@electric-sql/pglite-socket": ["@electric-sql/pglite-socket@0.0.20", "https://registry.npmmirror.com/@electric-sql/pglite-socket/-/pglite-socket-0.0.20.tgz", { "peerDependencies": { "@electric-sql/pglite": "0.3.15" }, "bin": { "pglite-server": "dist/scripts/server.js" } }, "sha512-J5nLGsicnD9wJHnno9r+DGxfcZWh+YJMCe0q/aCgtG6XOm9Z7fKeite8IZSNXgZeGltSigM9U/vAWZQWdgcSFg=="],
 
     "@electric-sql/pglite-tools": ["@electric-sql/pglite-tools@0.2.20", "https://registry.npmmirror.com/@electric-sql/pglite-tools/-/pglite-tools-0.2.20.tgz", { "peerDependencies": { "@electric-sql/pglite": "0.3.15" } }, "sha512-BK50ZnYa3IG7ztXhtgYf0Q7zijV32Iw1cYS8C+ThdQlwx12V5VZ9KRJ42y82Hyb4PkTxZQklVQA9JHyUlex33A=="],
+
+    "@elysiajs/eden": ["@elysiajs/eden@1.4.8", "https://registry.npmmirror.com/@elysiajs/eden/-/eden-1.4.8.tgz", { "peerDependencies": { "elysia": ">=1.4.19" } }, "sha512-a7oct2kFa49tH+GawZtSUCZR2rQgucNYgGLz8alXUqb4IrU3PASA0T4zXJw4MhdV1Xb6vyiR7p7kkqJcVjgbkA=="],
 
     "@elysiajs/openapi": ["@elysiajs/openapi@1.4.14", "https://registry.npmmirror.com/@elysiajs/openapi/-/openapi-1.4.14.tgz", { "peerDependencies": { "elysia": ">= 1.4.0" } }, "sha512-kWmJWdvP8/LwHwAJXSpz6xFfYUoyUyEPRimEYABuDU1rOnS27Da1u9T2jyU7frOopxKWV/wDfDxMP8z2xdCPJw=="],
 

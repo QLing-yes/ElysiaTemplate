@@ -1,6 +1,8 @@
 [English](./README-en.md) | [中文](./README.md)
 
-- MVC backend, auto route & middleware, more coming.
+## Informal Version
+
+- MVC backend, auto route & middleware, End-to-End Type Safety , more coming.
 
 ## Quick Start
 

@@ -55,7 +55,9 @@ export function createDir(pathStr: string, dirOnly?: boolean): string {
  * @param pattern  glob 模式
  */
 export function filePathTree(suffix: string[], pattern: string | string[]) {
-	const FilePathList = fs.globSync(pattern).map((uri) => uri.replaceAll("\\", "/"));
+	const FilePathList = fs
+		.globSync(pattern)
+		.map((uri) => uri.replaceAll("\\", "/"));
 
 	type PatternMatchMap = Record<string, number[]>;
 	type FileTree = Record<string, PatternMatchMap>;

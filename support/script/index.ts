@@ -1,3 +1,6 @@
-import autoRoutes from "./routes"
+import autoRoutes from "./routes";
 
-autoRoutes({ fromDir: 'app/controller', target: "./support/generated/routes/index.ts"});
+autoRoutes({
+	fromDir: "app/controller",
+	target: "./support/generated/routes/index.ts",
+});

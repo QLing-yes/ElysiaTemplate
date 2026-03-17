@@ -9,6 +9,7 @@
 		"generate": "bun ./support/script/index.ts && bun --bun run prisma generate"
 	},
 	"dependencies": {
+		"@elysiajs/eden": "latest",
 		"@elysiajs/openapi": "1.4.14",
 		"@elysiajs/static": "1.4.7",
 		"@prisma/adapter-mariadb": "7.4.2",

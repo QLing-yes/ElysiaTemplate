@@ -9,6 +9,6 @@
 
 # 信息参考优先级
 技能参考：`.agents/skills/elysiajs`、`**/skills/elysiajs` 目录。
+项目文档：参考项目内所有 markdown 文件（排除 node_modules 目录）。
 根据问题关键词使用MCP: `elysia`、`bun`、`deepwiki`、`context7`。
 官方文档：`https://elysiajs.com/llms.txt`、`https://elysiajs.com/llms-full.txt`、`https://github.com/elysiajs/documentation`。
-项目文档：参考项目内所有 markdown 文件（排除 node_modules 目录）。

@@ -1,33 +1,24 @@
 {
-  "editor.guides.bracketPairs": "active",
-  "typescript.suggest.paths": true,
-  "javascript.suggest.paths": true,
-  "explorer.sortOrder": "type",
-  "explorer.fileNesting.enabled": true,
-  "explorer.fileNesting.expand": true,
-  // ${} dirname 目录名称，basename 开头名称，extname 扩展名称
-  "explorer.fileNesting.patterns": {
-    ".gitignore": ".gitattributes, .gitmodules, .gitmessage, .mailmap, .git-blame*",
-    "*.css": "$(capture).*.map",
-    "*.scss": "$(capture).*",
-    "*.js": "$(capture).js.map, $(capture).d.ts.map, $(capture).min.js, $(capture).d.ts",
-    "*.jsx": "$(capture).js",
-    "*.ts": "$(capture).js, $(capture).*.ts",
-    "*.tsx": "$(capture).ts",
-    "*.vue": "$(capture).*.ts, $(capture).*.js",
-    "index.d.ts": "*.d.ts",
-    "shims.d.ts": "*.d.ts",
-    ".env": "*.env, .env.*, env.d.ts",
-    "dockerfile": ".dockerignore, dockerfile*",
-    "package.json": "tsconfig.json,bunfig.toml,prisma.config.ts,.npmrc,*.lock,*lock.json,.gitignore,LICENSE,biome.json*,.biomeignore",
-    "README.md":"README*.md,AGENTS.md"
-  },
-  "workbench.colorCustomizations": {
-    "sash.hoverBorder": "#5c0da1",
-    "statusBar.background": "#5c0da1",
-    "statusBar.foreground": "#e7e7e7",
-    "statusBarItem.hoverBackground": "#5c0da1",
-    "statusBarItem.remoteBackground": "#5c0da1",
-    "statusBarItem.remoteForeground": "#e7e7e7"
-  },
+	"editor.guides.bracketPairs": "active",
+	"typescript.suggest.paths": true,
+	"javascript.suggest.paths": true,
+	"explorer.sortOrder": "type",
+	"explorer.fileNesting.enabled": true,
+	"explorer.fileNesting.expand": true,
+	"explorer.fileNesting.patterns": {
+		".gitignore": ".gitattributes, .gitmodules, .gitmessage, .mailmap, .git-blame*",
+		"*.css": "$(capture).*.map",
+		"*.scss": "$(capture).*",
+		"*.js": "$(capture).js.map, $(capture).d.ts.map, $(capture).min.js, $(capture).d.ts",
+		"*.jsx": "$(capture).js",
+		"*.ts": "$(capture).js, $(capture).*.ts",
+		"*.tsx": "$(capture).ts",
+		"*.vue": "$(capture).*.ts, $(capture).*.js",
+		"index.d.ts": "*.d.ts",
+		"shims.d.ts": "*.d.ts",
+		".env": "*.env, .env.*, env.d.ts",
+		"dockerfile": ".dockerignore, dockerfile*",
+		"package.json": "tsconfig.json,bunfig.toml,prisma.config.ts,.npmrc,*.lock,*lock.json,.gitignore,LICENSE,biome.json*,.biomeignore",
+		"README.md": "*.md"
+	}
 }
