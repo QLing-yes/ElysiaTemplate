@@ -1,12 +1,6 @@
-import { Elysia } from "elysia";
-import plug_global from "@/app/plugins/global.plug";
-import plug_routes from "@/app/plugins/routes.plug";
-import routes from "@/support/generated/routes";
+import plugins from "@/app/plugins/index.plug";
 
-const app = new Elysia({ name: __filename })
-	.use(plug_global)
-	.use(plug_routes.use(routes))
-	.listen(3000);
+const app = plugins.listen(3000);
 
 export type APP = typeof app;
 
