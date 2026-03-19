@@ -1,8 +1,8 @@
-[English](./README-en.md) | [中文](./README.md)
+English | [中文](./README.md)
 
-## Informal Version
+## Unofficial Version
 
-- MVC backend, auto route & middleware, End-to-End Type Safety , more coming.
+- MVC backend, auto route, End-to-End Type Safety, more coming.
 
 ## Quick Start
 
@@ -13,69 +13,44 @@ bun i
 ## Commands
 
 ```bash
-bun run menu    # Launch command menu
+bun run menu    # Start command menu
 bun run dev     # Start development server
 bun run fix     # Fix code style
-bun run generate  # Generate and register routes, middleware, prisma
+bun run generate  # Generate and register routes, prisma
 ```
 
 ## Project Structure
 
 ```
 Project/
-├── public/                   # Static assets
-├── app/                      # Application core code
-│   ├── controller/           # Controller layer
+├── public/                   # Static assets (auto-routed)
+├── app/                      # Application
+│   ├── controller/           # Controller layer (files ending with `ctrl.ts` are auto-loaded)
 │   ├── lib/                  # Library files
 │   │   ├── prisma.ts         # Prisma client
 │   │   └── redis.ts          # Redis client
+│   ├── plugins/              # Plugins directory
+│   │   ├── index.plug.ts     # Global plugins
+│   │   └── routes.plug.ts    # Route plugins
 │   ├── utils/                # Utility functions
 │   ├── common.ts             # Common modules
-│   └── index.ts              # Application entry
+│   └── index.ts              # Application entry point
 ├── prisma/                   # Database
-│   ├── migrations/           # Database migrations
+│   ├── migrations/
 │   │   └── migration.sql
 │   └── schema.prisma         # Data models
-├── support/                  # Helper scripts (no need to worry about)
+├── support/                  # Support scripts (no need to care about)
 │   └── script/
 │       ├── index.ts          # Generation script
 │       ├── menu.ts           # Command menu
-│       └── routes.ts         # Route registration
-├── .env                      # Environment variables
+│       └── routes.ts         # Route generation utilities
+|── .env                      # Environment variables
 ...
 ```
 
-## Controller Directory
+## Auto Loading
 
-### Auto-loading
-- Files `middleware.ts` and `*.ctrl.ts` in this directory are automatically loaded
-- Run `bun run generate` to update imports, or restart the project
-
-### Middleware Scope
-- The impact of `middleware.ts` is limited to the current directory and its downstream subdirectories, provided the `{ as:'scoped' }` option is used
-
-### Example
-```
-app/controller/
-├── middleware.ts        # Middleware
-├── user.ctrl.ts         # User routes
-└── admin/
-    ├── middleware.ts    # Middleware
-    ├── user.ctrl.ts    # Admin user routes
-    └── admin_sub/
-        ├── middleware.ts  # Middleware
-        └── user.ctrl.ts   # Sub-module user routes
-```
-
-## Module Description
-
-| Directory | Description |
-|------|------|
-| `app/controller` | Controller layer, supports auto-loading routes and middleware |
-| `app/lib` | Base library wrappers (database, cache, etc.) |
-| `app/utils` | Utility functions |
-| `prisma` | Database models and migrations |
-| `support/script` | Build and code generation scripts |
+- Run `bun run generate` or restart the project to update auto-imports
 
 ## AI Skills / For LLMs
 
@@ -86,19 +61,20 @@ bunx skills add elysiajs/skills
 - [llms](https://elysiajs.com/llms.txt)
 - [llms-full](https://elysiajs.com/llms-full.txt)
 
-## MCP Recommended
-```
+## Recommended MCPs
+
+```json
 {
   "mcpServers": {
-    // Turn any GitHub project into a documentation center
+    // Transform any GitHub project into a documentation hub
     "name": {
       "url": "https://gitmcp.io/{author}/{repo}"
     },
-    // elysia documentation
+    // elysia docs
     "elysia": {
       "url": "https://gitmcp.io/elysiajs/documentation"
     },
-    // Bun documentation
+    // Bun docs
     "bun": {
       "url": "https://bun.com/docs/mcp",
     },
@@ -124,7 +100,6 @@ bunx skills add elysiajs/skills
     "chrome-devtools": {
       "command": "npx",
       "args": [
-        "-y",
         "chrome-devtools-mcp@latest"
       ]
     },
@@ -132,7 +107,6 @@ bunx skills add elysiajs/skills
     "playwright": {
       "command": "npx",
       "args": [
-        "-y",
         "@playwright/mcp@latest"
       ]
     }

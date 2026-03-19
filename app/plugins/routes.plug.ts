@@ -1,26 +1,17 @@
 import { Elysia } from "elysia";
-import * as $ from "@/app/common";
 
+const getTime = () => new Date().toLocaleString("zh-CN", { hour12: false });
+/** 路由插件 */
 export default new Elysia({ name: __filename })
-	.decorate("$", $)
-	.onBeforeHandle(({ request }) => {
-		const { method, url, headers } = request;
-		request
-			.clone()
-			.text()
-			.then((body) => {
-				console.log(`[请求] ${method} ${url}`, {
-					headers: Object.fromEntries(headers.entries()),
-					body: body || undefined,
-				});
-			});
+	.onBeforeHandle(({ request, body }) => {
+		console.log(`[${getTime()}] [请求] ${request.method} ${request.url}`, { body });
 	})
 	.onAfterResponse(({ set }) => {
-		console.log(`[响应结束] ${set.status}`);
+		console.log(`[${getTime()}] [结束] ${set.status}`);
 	})
-	.onError(({ error: errObj, code, request, set, $ }) => {
+	.onError(({ error: errObj, code, request, set }) => {
 		const err = errObj as Error;
-		console.error(`[错误] ${request.method} ${new URL(request.url).pathname}`, {
+		console.error(`[${getTime()}] [错误] ${request.method} ${new URL(request.url).pathname}`, {
 			code,
 			message: err.message,
 			stack: err.stack,
@@ -28,4 +19,4 @@ export default new Elysia({ name: __filename })
 		set.status = 500;
 		set.headers["content-type"] = "application/json";
 		return $.res.error(err.message, 500);
-	})
+	});

@@ -23,53 +23,33 @@ bun run generate  # 生成和注册路由、prisma
 
 ```
 Project/
-├── public/                   # 静态资源
-├── app/                      # 应用核心代码
-│   ├── controller/           # 控制器层
+├── public/                   # 静态资源（自动路由）
+├── app/                      # 应用
+│   ├── controller/           # 控制器层(`ctrl.ts` 结尾的文件将自动加载)
 │   ├── lib/                  # 库文件
 │   │   ├── prisma.ts         # Prisma 客户端
 │   │   └── redis.ts          # Redis 客户端
+│   ├── plugins/              # 插件目录
+│   │   ├── index.plug.ts     # 全局插件
+│   │   └── routes.plug.ts    # 路由插件
 │   ├── utils/                # 工具函数
 │   ├── common.ts             # 公共模块
 │   └── index.ts              # 应用入口
 ├── prisma/                   # 数据库
-│   ├── migrations/           # 数据库迁移
+│   ├── migrations/
 │   │   └── migration.sql
 │   └── schema.prisma         # 数据模型
 ├── support/                  # 辅助脚本（无需关心）
 │   └── script/
 │       ├── index.ts          # 生成脚本
 │       ├── menu.ts           # 命令菜单
-│       └── routes.ts         # 路由注册
+│       └── routes.ts         # 路由生成工具
 |── .env                      # 环境变量
 ...
 ```
 
-## controller 目录介绍
-
-### 自动加载
-- 目录下的 `*ctrl.ts` 文件都会自动加载
-- 运行 `bun run generate` 更新导入，或重新启动项目
-
-### 示例
-```
-app/controller/
-├── user.ctrl.ts
-└── admin/
-    ├── user.ctrl.ts
-    └── admin_sub/
-        └── user.ctrl.ts
-```
-
-## 模块说明
-
-| 目录 | 说明 |
-|------|------|
-| `app/controller` | 控制器层，支持自动加载路由 |
-| `app/lib` | 基础库封装（数据库、缓存等） |
-| `app/utils` | 工具函数 |
-| `prisma` | 数据库模型和迁移 |
-| `support/script` | 构建和代码生成脚本 |
+## 自动加载
+- 运行 `bun run generate`或重新启动项目来更新自动导入
 
 ## 人工智能技能 / 针对LLMS
 

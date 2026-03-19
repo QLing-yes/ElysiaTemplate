@@ -1,4 +1,3 @@
-import "dotenv/config";
 import { PrismaMariaDb } from "@prisma/adapter-mariadb";
 import { PrismaClient } from "@/support/generated/prisma";
 
@@ -10,6 +9,7 @@ const adapter = new PrismaMariaDb({
 	database: process.env.DATABASE_NAME,
 	connectionLimit: 5,
 });
+/** prisma客户端 */
 const prisma = new PrismaClient({ adapter });
 
 export { prisma };

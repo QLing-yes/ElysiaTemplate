@@ -33,7 +33,7 @@ function generatePlugin(
 ): string {
 	const opts = name
 		? `{ prefix: "${name}", name: "${fullPath}" + __filename }`
-		: `{ name: "${fullPath}" }`;
+		: `{ name: "${fullPath}" + __filename }`;
 	let code = `\nconst ${prefix}${idx} = () => new Elysia(${opts})`;
 	mods.forEach((i) => (code += `\n\t.use(mod_${i})`));
 	childs.forEach((id) => (code += `\n\t.use(${prefix}${id}())`));
