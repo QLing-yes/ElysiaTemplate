@@ -27,6 +27,7 @@ Project/
 ├── app/                      # 应用
 │   ├── controller/           # 控制器层(`ctrl.ts` 结尾的文件将自动加载)
 │   ├── lib/                  # 库文件
+│   │   ├── logger.ts         # 日志库
 │   │   ├── prisma.ts         # Prisma 客户端
 │   │   └── redis.ts          # Redis 客户端
 │   ├── plugins/              # 插件目录

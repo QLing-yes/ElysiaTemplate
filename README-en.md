@@ -25,21 +25,22 @@ bun run generate  # Generate and register routes, prisma
 Project/
 ├── public/                   # Static assets (auto-routed)
 ├── app/                      # Application
-│   ├── controller/           # Controller layer (`ctrl.ts` files are auto-loaded)
+│   ├── controller/           # Controller layer (files ending with `ctrl.ts` are auto-loaded)
 │   ├── lib/                  # Library files
+│   │   ├── logger.ts         # Logger library
 │   │   ├── prisma.ts         # Prisma client
 │   │   └── redis.ts          # Redis client
-│   ├── plugins/              # Plugin directory
+│   ├── plugins/              # Plugins directory
 │   │   ├── index.plug.ts     # Global plugins
 │   │   └── routes.plug.ts    # Route plugins
 │   ├── utils/                # Utility functions
 │   ├── common.ts             # Common modules
-│   └── index.ts              # Application entry
+│   └── index.ts              # Application entry point
 ├── prisma/                   # Database
 │   ├── migrations/
 │   │   └── migration.sql
 │   └── schema.prisma         # Data models
-├── support/                  # Support scripts (no need to worry about)
+├── support/                  # Support scripts (no need to care about)
 │   └── script/
 │       ├── index.ts          # Generation script
 │       ├── menu.ts           # Command menu
@@ -54,17 +55,17 @@ Project/
 
 ## Logger
 
-Time-based rotating file logger built on Bun, supports hourly/daily/monthly rotation.
+A time-based log rotation library built on Bun, supporting rotation by hour/day/month.
 
-### Options
+### Configuration
 
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
 | `dir` | `string` | `"logs"` | Output directory |
-| `rotateBy` | `"hour" \| "day" \| "month"` | `"day"` | Rotation granularity |
+| `rotateBy` | `"hour" \| "day" \| "month"` | `"day"` | Rotation interval |
 | `sync` | `boolean` | `false` | Sync mode (direct flush) |
-| `maxFiles` | `number` | `0` | Max archived files, 0 = no cleanup |
-| `level` | `"debug" \| "info" \| "warn" \| "error"` | `"debug"` | Min level |
+| `maxFiles` | `number` | `0` | Number of retained archives, 0 = no cleanup |
+| `level` | `"debug" \| "info" \| "warn" \| "error"` | `"debug"` | Minimum log level |
 | `flushInterval` | `number` | `1000` | Flush interval (ms) |
 | `stdout` | `boolean` | `true` | Output to stdout |
 
@@ -72,12 +73,12 @@ Time-based rotating file logger built on Bun, supports hourly/daily/monthly rota
 
 | Method | Description |
 |--------|-------------|
-| `log.debug(msg, meta?)` | Debug log |
-| `log.info(msg, meta?)` | Info log |
-| `log.warn(msg, meta?)` | Warn log |
-| `log.error(msg, meta?)` | Error log |
-| `log.flush()` | Flush buffer |
-| `log.close()` | Close logger |
+| `log.debug(msg, meta?)` | Log debug message |
+| `log.info(msg, meta?)` | Log info message |
+| `log.warn(msg, meta?)` | Log warning message |
+| `log.error(msg, meta?)` | Log error message |
+| `log.flush()` | Manually flush buffer |
+| `log.close()` | Close Logger |
 
 ## AI Skills / For LLMs
 
@@ -103,7 +104,7 @@ bunx skills add elysiajs/skills
     },
     // Bun docs
     "bun": {
-      "url": "https://bun.com/docs/mcp"
+      "url": "https://bun.com/docs/mcp",
     },
     // Codebase context understanding service
     "context7": {
@@ -127,7 +128,6 @@ bunx skills add elysiajs/skills
     "chrome-devtools": {
       "command": "npx",
       "args": [
-        "-y",
         "chrome-devtools-mcp@latest"
       ]
     },
@@ -135,7 +135,6 @@ bunx skills add elysiajs/skills
     "playwright": {
       "command": "npx",
       "args": [
-        "-y",
         "@playwright/mcp@latest"
       ]
     }
