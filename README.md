@@ -2,7 +2,7 @@
 
 ## 非正式版本
 
-- MVC backend, auto route, End-to-End Type Safety , more coming.
+- MVC后端，自动路由，端到端类型安全，更多即将到来。
 
 ## 快速开始
 
@@ -50,6 +50,33 @@ Project/
 
 ## 自动加载
 - 运行 `bun run generate`或重新启动项目来更新自动导入
+
+## 日志
+
+基于 Bun 的时间段分文件日志库，支持按小时/天/月轮转。
+
+### 配置
+
+| 选项 | 类型 | 默认值 | 说明 |
+|------|------|--------|------|
+| `dir` | `string` | `"logs"` | 输出目录 |
+| `rotateBy` | `"hour" \| "day" \| "month"` | `"day"` | 轮转粒度 |
+| `sync` | `boolean` | `false` | 同步模式（直接刷盘） |
+| `maxFiles` | `number` | `0` | 保留归档数，0 不清理 |
+| `level` | `"debug" \| "info" \| "warn" \| "error"` | `"debug"` | 最低级别 |
+| `flushInterval` | `number` | `1000` | 刷新间隔(ms) |
+| `stdout` | `boolean` | `true` | 输出到 stdout |
+
+### API
+
+| 方法 | 说明 |
+|------|------|
+| `log.debug(msg, meta?)` | 记录调试日志 |
+| `log.info(msg, meta?)` | 记录信息日志 |
+| `log.warn(msg, meta?)` | 记录警告日志 |
+| `log.error(msg, meta?)` | 记录错误日志 |
+| `log.flush()` | 主动刷新缓冲 |
+| `log.close()` | 关闭 Logger |
 
 ## 人工智能技能 / 针对LLMS
 

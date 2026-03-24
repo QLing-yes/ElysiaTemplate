@@ -25,21 +25,21 @@ bun run generate  # Generate and register routes, prisma
 Project/
 ├── public/                   # Static assets (auto-routed)
 ├── app/                      # Application
-│   ├── controller/           # Controller layer (files ending with `ctrl.ts` are auto-loaded)
+│   ├── controller/           # Controller layer (`ctrl.ts` files are auto-loaded)
 │   ├── lib/                  # Library files
 │   │   ├── prisma.ts         # Prisma client
 │   │   └── redis.ts          # Redis client
-│   ├── plugins/              # Plugins directory
+│   ├── plugins/              # Plugin directory
 │   │   ├── index.plug.ts     # Global plugins
 │   │   └── routes.plug.ts    # Route plugins
 │   ├── utils/                # Utility functions
 │   ├── common.ts             # Common modules
-│   └── index.ts              # Application entry point
+│   └── index.ts              # Application entry
 ├── prisma/                   # Database
 │   ├── migrations/
 │   │   └── migration.sql
 │   └── schema.prisma         # Data models
-├── support/                  # Support scripts (no need to care about)
+├── support/                  # Support scripts (no need to worry about)
 │   └── script/
 │       ├── index.ts          # Generation script
 │       ├── menu.ts           # Command menu
@@ -51,6 +51,33 @@ Project/
 ## Auto Loading
 
 - Run `bun run generate` or restart the project to update auto-imports
+
+## Logger
+
+Time-based rotating file logger built on Bun, supports hourly/daily/monthly rotation.
+
+### Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `dir` | `string` | `"logs"` | Output directory |
+| `rotateBy` | `"hour" \| "day" \| "month"` | `"day"` | Rotation granularity |
+| `sync` | `boolean` | `false` | Sync mode (direct flush) |
+| `maxFiles` | `number` | `0` | Max archived files, 0 = no cleanup |
+| `level` | `"debug" \| "info" \| "warn" \| "error"` | `"debug"` | Min level |
+| `flushInterval` | `number` | `1000` | Flush interval (ms) |
+| `stdout` | `boolean` | `true` | Output to stdout |
+
+### API
+
+| Method | Description |
+|--------|-------------|
+| `log.debug(msg, meta?)` | Debug log |
+| `log.info(msg, meta?)` | Info log |
+| `log.warn(msg, meta?)` | Warn log |
+| `log.error(msg, meta?)` | Error log |
+| `log.flush()` | Flush buffer |
+| `log.close()` | Close logger |
 
 ## AI Skills / For LLMs
 
@@ -76,7 +103,7 @@ bunx skills add elysiajs/skills
     },
     // Bun docs
     "bun": {
-      "url": "https://bun.com/docs/mcp",
+      "url": "https://bun.com/docs/mcp"
     },
     // Codebase context understanding service
     "context7": {
@@ -100,6 +127,7 @@ bunx skills add elysiajs/skills
     "chrome-devtools": {
       "command": "npx",
       "args": [
+        "-y",
         "chrome-devtools-mcp@latest"
       ]
     },
@@ -107,6 +135,7 @@ bunx skills add elysiajs/skills
     "playwright": {
       "command": "npx",
       "args": [
+        "-y",
         "@playwright/mcp@latest"
       ]
     }
