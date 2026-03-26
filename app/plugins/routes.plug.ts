@@ -1,7 +1,5 @@
 import { Elysia } from "elysia";
-import { Logger } from "@/app/lib/logger";
-
-const logger = new Logger({ dir: "logs/routes" });
+import { logger } from "@/app/lib/logger";
 
 /** 路由插件 */
 export default new Elysia({ name: __filename })

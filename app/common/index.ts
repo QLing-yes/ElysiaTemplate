@@ -1,7 +1,8 @@
+import { logger } from "@/app/lib/logger";
 import { prisma } from "@/app/lib/prisma";
 import redis from "@/app/lib/redis";
 
-export { prisma, redis };
+export { logger, prisma, redis };
 export const res = { success, error };
 
 /** 响应统一格式 */
