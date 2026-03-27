@@ -16,5 +16,5 @@ const app = plugins
 		logger.info("service stop");
 	})
 	.listen(process.env.PORT || 3000);
-
+	
 export type APP = typeof app;

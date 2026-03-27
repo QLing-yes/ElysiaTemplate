@@ -259,7 +259,7 @@ export class Logger {
 	/** 关闭状态标志，close() 后拒绝所有写入 */
 	private closed = false;
 
-	/** flush 锁，防止并发 flush 导致数据重复 */
+	/** flush 锁，防止并发 flush 导致数据重复或丢失 */
 	private flushing = false;
 
 	/**
@@ -447,10 +447,10 @@ export class Logger {
 	 * 用于：高水位自动刷写、轮转前的缓冲迁移、进程退出
 	 */
 	private drainBufferSync(): void {
-		if (!this.buffer || this.flushing) return;
-		const data = this.buffer;
+		if (!this.buffer) return;
 		try {
-			appendFileSync(this.filePath, data);
+			appendFileSync(this.filePath, this.buffer);
+			// Bug2 fix: 只在写入成功后清空，失败时保留数据防止静默丢失
 			this.buffer = "";
 			this.bufferSize = 0;
 		} catch (err) {
