@@ -51,7 +51,7 @@ const list: Cmd[] = [
 	{
 		group: "生产",
 		label: "start",
-		cmd: `bun run generate && NODE_ENV=production bun ${main}`,
+		cmd: `NODE_ENV=production bun ${main}`,
 		desc: "生产启动",
 	},
 	{
