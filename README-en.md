@@ -27,6 +27,7 @@ Project/
 ├── app/                      # Application
 │   ├── controller/           # Controller layer (files ending with `ctrl.ts` are auto-loaded)
 │   ├── lib/                  # Library files
+│   │   ├── logger.ts         # Logger library
 │   │   ├── prisma.ts         # Prisma client
 │   │   └── redis.ts          # Redis client
 │   ├── plugins/              # Plugins directory
@@ -51,6 +52,33 @@ Project/
 ## Auto Loading
 
 - Run `bun run generate` or restart the project to update auto-imports
+
+## Logger
+
+A time-based log rotation library built on Bun, supporting rotation by hour/day/month.
+
+### Configuration
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `dir` | `string` | `"logs"` | Output directory |
+| `rotateBy` | `"hour" \| "day" \| "month"` | `"day"` | Rotation interval |
+| `sync` | `boolean` | `false` | Sync mode (direct flush) |
+| `maxFiles` | `number` | `0` | Number of retained archives, 0 = no cleanup |
+| `level` | `"debug" \| "info" \| "warn" \| "error"` | `"debug"` | Minimum log level |
+| `flushInterval` | `number` | `1000` | Flush interval (ms) |
+| `stdout` | `boolean` | `true` | Output to stdout |
+
+### API
+
+| Method | Description |
+|--------|-------------|
+| `log.debug(msg, meta?)` | Log debug message |
+| `log.info(msg, meta?)` | Log info message |
+| `log.warn(msg, meta?)` | Log warning message |
+| `log.error(msg, meta?)` | Log error message |
+| `log.flush()` | Manually flush buffer |
+| `log.close()` | Close Logger |
 
 ## AI Skills / For LLMs
 

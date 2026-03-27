@@ -7,9 +7,8 @@ async function test() {
 	const data = (await client["1_c_res"].get()).data;
 	console.log(data?.data);
 
-	client["1_c_errc_err"].get()
-	.then((res) => {
+	client["1_c_errc_err"].get().then((res) => {
 		console.log(res.data?.data);
-	})
+	});
 }
 test();
