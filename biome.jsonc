@@ -1,47 +1,48 @@
 {
-	// 🔧 引用 Biome 的 JSON Schema，用于编辑器的智能提示和配置文件格式验证
-	"$schema": "https://biomejs.dev/schemas/2.4.4/schema.json",
-	// 📦 版本控制系统（VCS）集成配置
-	"vcs": {
-		"enabled": true, // 开启 VCS 集成（与 Git 等版本工具联动）
-		"clientKind": "git", // 指定使用 Git 作为版本控制工具
-		"useIgnoreFile": true // 读取并遵循 .gitignore 文件中定义的忽略规则
-	},
-	// 📁 文件处理相关配置
-	"files": {
-		"ignoreUnknown": false // 不忽略未知文件类型：遇到未识别的文件时会报错提示（而非静默跳过）
-	},
-	// ✨ 代码格式化工具配置
-	"formatter": {
-		"enabled": true, // 全局开启代码格式化功能
-		"indentStyle": "tab" // 使用 Tab 字符作为缩进（可选值："tab" | "space"）
-	},
-	// 🔍 代码检查（Linter）工具配置
-	"linter": {
-		"enabled": true, // 全局开启代码检查功能
-		"rules": {
-			"recommended": true, // 启用 Biome 官方推荐的规则集（包含大部分常用的代码质量规则）
-			"suspicious": {
-				"useIterableCallbackReturn": "off"
-			},
-			"style": {
-				"noNonNullAssertion": "off" // 非空断言
-			}
-		}
-	},
-	// 🟨 JavaScript/TypeScript 专属配置
-	"javascript": {
-		"formatter": {
-			"quoteStyle": "double" // JS/TS 代码中强制使用双引号（可选值："double" | "single"）
-		}
-	},
-	// 🤖 辅助功能（代码动作/Quick Fix）配置
-	"assist": {
-		"enabled": true, // 全局开启辅助功能（如自动修复、代码重构等）
-		"actions": {
-			"source": {
-				"organizeImports": "on" // 开启“自动整理导入语句”功能（排序、去重等）
-			}
-		}
-	}
+ // 🔧 引用 Biome 的 JSON Schema，用于编辑器的智能提示和配置文件格式验证
+ "$schema": "https://biomejs.dev/schemas/2.4.4/schema.json",
+ // 📦 版本控制系统（VCS）集成配置
+ "vcs": {
+  "enabled": true, // 开启 VCS 集成（与 Git 等版本工具联动）
+  "clientKind": "git", // 指定使用 Git 作为版本控制工具
+  "useIgnoreFile": true // 读取并遵循 .gitignore 文件中定义的忽略规则
+ },
+ // 📁 文件处理相关配置
+ "files": {
+  "ignoreUnknown": false // 不忽略未知文件类型：遇到未识别的文件时会报错提示（而非静默跳过）
+ },
+ // ✨ 代码格式化工具配置
+ "formatter": {
+  "enabled": true, // 全局开启代码格式化功能
+  "indentStyle": "space", // 使用 Tab 字符作为缩进（可选值："tab" | "space"）
+//   "indentWidth": 1
+ },
+ // 🔍 代码检查（Linter）工具配置
+ "linter": {
+  "enabled": true, // 全局开启代码检查功能
+  "rules": {
+   "recommended": true, // 启用 Biome 官方推荐的规则集（包含大部分常用的代码质量规则）
+   "suspicious": {
+    "useIterableCallbackReturn": "off"
+   },
+   "style": {
+    "noNonNullAssertion": "off" // 非空断言
+   }
+  }
+ },
+ // 🟨 JavaScript/TypeScript 专属配置
+ "javascript": {
+  "formatter": {
+   "quoteStyle": "double" // JS/TS 代码中强制使用双引号（可选值："double" | "single"）
+  }
+ },
+ // 🤖 辅助功能（代码动作/Quick Fix）配置
+ "assist": {
+  "enabled": true, // 全局开启辅助功能（如自动修复、代码重构等）
+  "actions": {
+   "source": {
+    "organizeImports": "on" // 开启“自动整理导入语句”功能（排序、去重等）
+   }
+  }
+ }
 }

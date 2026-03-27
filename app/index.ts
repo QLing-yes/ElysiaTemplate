@@ -7,14 +7,14 @@ import { logger } from "@/app/lib/logger";
 import plugins from "@/app/plugins/index.plug";
 
 const app = plugins
-	.onStart(() => {
-		const service = `localhost:${process.env.PORT || 3000}`;
-		logger.info(`service http://${service}`);
-		logger.info(`openapi http://${service}/openapi`);
-	})
-	.onStop(() => {
-		logger.info("service stop");
-	})
-	.listen(process.env.PORT || 3000);
-	
+  .onStart(() => {
+    const service = `localhost:${process.env.PORT || 3000}`;
+    logger.info(`service http://${service}`);
+    logger.info(`openapi http://${service}/openapi`);
+  })
+  .onStop(() => {
+    logger.info("service stop");
+  })
+  .listen(process.env.PORT || 3000);
+
 export type APP = typeof app;

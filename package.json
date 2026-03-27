@@ -1,26 +1,26 @@
 {
-	"name": "elysia_backend",
-	"version": "1.0.50",
-	"type": "module",
-	"scripts": {
-		"menu": "bun run ./support/script/menu.ts",
-		"dev": "bun run generate && bun run --watch ./app/index.ts",
-		"fix": "bunx --bun @biomejs/biome check --write .",
-		"generate": "bun ./support/script/index.ts && bun --bun run prisma generate"
-	},
-	"dependencies": {
-		"@elysiajs/eden": "latest",
-		"@elysiajs/openapi": "1.4.14",
-		"@elysiajs/static": "1.4.7",
-		"@prisma/adapter-mariadb": "7.4.2",
-		"@prisma/client": "7.4.2",
-		"elysia": "latest",
-		"prismabox": "1.1.26"
-	},
-	"devDependencies": {
-		"@biomejs/biome": "2.4.4",
-		"bun-types": "latest",
-		"prisma": "7.4.2"
-	},
-	"module": "./index.js"
+ "name": "elysia_backend",
+ "version": "1.0.50",
+ "type": "module",
+ "scripts": {
+  "menu": "bun run ./support/script/menu.ts",
+  "dev": "bun run generate && bun run --watch ./app/index.ts",
+  "fix": "bunx --bun @biomejs/biome check --write .",
+  "generate": "bun ./support/script/index.ts && bun --bun run prisma generate"
+ },
+ "dependencies": {
+  "@elysiajs/eden": "latest",
+  "@elysiajs/openapi": "1.4.14",
+  "@elysiajs/static": "1.4.7",
+  "@prisma/adapter-mariadb": "7.4.2",
+  "@prisma/client": "7.4.2",
+  "elysia": "latest",
+  "prismabox": "1.1.26"
+ },
+ "devDependencies": {
+  "@biomejs/biome": "2.4.4",
+  "bun-types": "latest",
+  "prisma": "7.4.2"
+ },
+ "module": "./index.js"
 }
