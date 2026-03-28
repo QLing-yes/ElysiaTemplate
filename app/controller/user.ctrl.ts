@@ -1,7 +1,17 @@
 export default (app: RouterType) =>
   app
-    //   .guard({ tags: ["user"] })
-    
+    .guard({ tags: ["user"] }, (app) =>
+      app.get(
+        "/exit",
+        () => {
+          process.exit(1);
+        },
+        {
+          detail: { operationId: "1001" },
+        },
+      ),
+    )
+
     .get("/1_c", () => "1_c", {
       detail: { operationId: "1001" },
     })

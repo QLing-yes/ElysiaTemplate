@@ -546,7 +546,7 @@ export class Logger {
  private buildLine(level: LogLevel, msg: string, time: string, metaJson: string | null): string {
   const label = level.toUpperCase().padEnd(5);
   const metaStr = metaJson ? `\n${metaJson}` : "";
-  return `${time} [${label}] ${msg}${metaStr}\n\n`;
+  return `${time} [${label}] ${msg}${metaStr}\n`;
  }
 
  /**
@@ -577,7 +577,7 @@ export class Logger {
   const label = level.toUpperCase().padEnd(5);
   const metaStr = metaJson ? `\n${metaJson}` : "";
 
-  process.stdout.write(`${color}${time} [${label}]${RESET} ${msg}${metaStr}\n\n`);
+  process.stdout.write(`${color}${time} [${label}]${RESET} ${msg}${metaStr}\n`);
  }
 }
 
