@@ -1,64 +1,60 @@
 {
- "compilerOptions": {
-  // ==========================================
-  // 🎯 【Bun 原生环境与模块基础】（核心配置）
-  // ==========================================
-  "lib": ["ESNext"], // 仅引入最新 ES 标准类型（纯 Bun 无 DOM/浏览器 API）
-  "types": ["bun-types"], // 引入 Bun 原生 API 类型提示（必须！否则无法识别 Bun.file/Bun.serve 等）
-  "target": "ESNext", // 编译目标为最新 ES 版本（Bun 原生全支持，无需语法降级）
-  "module": "Preserve", // 完全保留原始 ESM 模块语法（交给 Bun 处理，最大化 Tree Shaking）
-  "moduleResolution": "bundler", // 采用现代 Bundler 模块解析（适配 Bun 的 package.json exports/imports 字段）
-  "moduleDetection": "force", // 强制所有文件视为 ES 模块（避免因缺少 import/export 导致的全局作用域污染）
-
-  // ==========================================
-  // 🔒 【类型安全体系】（原 strict 包含项，单独配置）
-  // ==========================================
-  // --- 原 strict 核心子项（建议全开启，覆盖 90% 低级类型错误）---
-  "noImplicitAny": true, // 不允许隐式 any 类型（变量/参数未声明类型且无法推断时报错）
-  "strictNullChecks": true, // 严格检查 null 和 undefined（禁止将 null/undefined 赋值给非空类型）
-  "strictFunctionTypes": true, // 严格检查函数类型（函数参数/返回值类型必须完全匹配）
-  "strictBindCallApply": true, // 严格检查 bind/call/apply 的参数类型（参数数量/类型必须与原函数一致）
-  "strictPropertyInitialization": true, // 严格检查类属性初始化（类属性必须在声明时或构造函数中赋值）
-  "noImplicitThis": true, // 不允许隐式 this 类型（this 未明确类型时报错）
-  "useUnknownInCatchVariables": true, // catch 变量默认是 unknown 类型（替代原 any，强制类型 narrowing）
-
-  // --- 原 strict 之外的进阶严格（按需保留）---
-  "forceConsistentCasingInFileNames": true, // 强制文件名大小写一致（避免跨平台协作/部署的路径错误）
-  "noUncheckedIndexedAccess": true, // 索引访问（如 obj[key]）结果自动加 undefined（强制处理边界情况）
-  "noImplicitOverride": true, // 重写父类方法时必须加 override 关键字（提升可读性）
-  "noFallthroughCasesInSwitch": true, // 禁止 switch 语句的 case 穿透（避免逻辑错误）
-
-  // --- 代码规范检查（生产环境建议全开启）---
-  "noUnusedLocals": true, // 检查未使用的局部变量（可用 _ 前缀标记临时未使用）
-  "noUnusedParameters": true, // 检查未使用的函数参数（可用 _ 前缀标记）
-
-  // ==========================================
-  // 🛠️ 【开发体验与兼容性】（提升效率）
-  // ==========================================
-  "allowJs": true, // 允许编译 JS 文件（TS/JS 混合开发友好）
-  "resolveJsonModule": true, // 允许直接导入 JSON 文件并获得类型提示
-  "esModuleInterop": true, // 兼容 CommonJS/ES 模块混合导入
-  "allowSyntheticDefaultImports": true, // 允许无默认导出的模块使用默认导入语法
-  "allowImportingTsExtensions": true, // 允许导入时显式写 .ts 扩展名（符合 ESM 规范）
-  "verbatimModuleSyntax": true, // 严格模块语法：类型导入必须用 import type
-
-  // --- 路径别名（简化深层导入）---
-  "baseUrl": ".",
-  "paths": {
-   "@/*": ["./*"]
+  "compilerOptions": {
+    // ==========================================
+    // 🎯 【Bun 原生环境与模块基础】（核心配置）
+    // ==========================================
+    "lib": ["ESNext"], // 仅引入最新 ES 标准类型（纯 Bun 无 DOM/浏览器 API）
+    "types": ["bun-types"], // 引入 Bun 原生 API 类型提示（必须！否则无法识别 Bun.file/Bun.serve 等）
+    "target": "ESNext", // 编译目标为最新 ES 版本（Bun 原生全支持，无需语法降级）
+    "module": "Preserve", // 完全保留原始 ESM 模块语法（交给 Bun 处理，最大化 Tree Shaking）
+    "moduleResolution": "bundler", // 采用现代 Bundler 模块解析（适配 Bun 的 package.json exports/imports 字段）
+    "moduleDetection": "force", // 强制所有文件视为 ES 模块（避免因缺少 import/export 导致的全局作用域污染）
+    // ==========================================
+    // 🔒 【类型安全体系】（原 strict 包含项，单独配置）
+    // ==========================================
+    // --- 原 strict 核心子项（建议全开启，覆盖 90% 低级类型错误）---
+    "noImplicitAny": true, // 不允许隐式 any 类型（变量/参数未声明类型且无法推断时报错）
+    "strictNullChecks": true, // 严格检查 null 和 undefined（禁止将 null/undefined 赋值给非空类型）
+    "strictFunctionTypes": true, // 严格检查函数类型（函数参数/返回值类型必须完全匹配）
+    "strictBindCallApply": true, // 严格检查 bind/call/apply 的参数类型（参数数量/类型必须与原函数一致）
+    "strictPropertyInitialization": true, // 严格检查类属性初始化（类属性必须在声明时或构造函数中赋值）
+    "noImplicitThis": true, // 不允许隐式 this 类型（this 未明确类型时报错）
+    "useUnknownInCatchVariables": true, // catch 变量默认是 unknown 类型（替代原 any，强制类型 narrowing）
+    // --- 原 strict 之外的进阶严格（按需保留）---
+    "forceConsistentCasingInFileNames": true, // 强制文件名大小写一致（避免跨平台协作/部署的路径错误）
+    "noUncheckedIndexedAccess": true, // 索引访问（如 obj[key]）结果自动加 undefined（强制处理边界情况）
+    "noImplicitOverride": true, // 重写父类方法时必须加 override 关键字（提升可读性）
+    "noFallthroughCasesInSwitch": true, // 禁止 switch 语句的 case 穿透（避免逻辑错误）
+    // --- 代码规范检查（生产环境建议全开启）---
+    "noUnusedLocals": true, // 检查未使用的局部变量（可用 _ 前缀标记临时未使用）
+    "noUnusedParameters": true, // 检查未使用的函数参数（可用 _ 前缀标记）
+    // ==========================================
+    // 🛠️ 【开发体验与兼容性】（提升效率）
+    // ==========================================
+    "allowJs": true, // 允许编译 JS 文件（TS/JS 混合开发友好）
+    "resolveJsonModule": true, // 允许直接导入 JSON 文件并获得类型提示
+    "esModuleInterop": true, // 兼容 CommonJS/ES 模块混合导入
+    "allowSyntheticDefaultImports": true, // 允许无默认导出的模块使用默认导入语法
+    "allowImportingTsExtensions": true, // 允许导入时显式写 .ts 扩展名（符合 ESM 规范）
+    "verbatimModuleSyntax": true, // 严格模块语法：类型导入必须用 import type
+    "experimentalDecorators": true, // 实验版装饰器
+    "emitDecoratorMetadata": true, // 实验版装饰器元数据
+    // "decorators": true, // 最新官方标准装饰器
+    // --- 路径别名（简化深层导入）---
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./*"]
+    },
+    // ==========================================
+    // ⚡ 【编译性能与输出控制】（纯 Bun 专属优化）
+    // ==========================================
+    "skipLibCheck": true, // 跳过 .d.ts 声明文件的完整检查（大幅提升速度）
+    "incremental": true, // 启用增量编译（配合 Bun 缓存，重编译极快）
+    "noEmit": true // Bun 直接运行 TS，无需 tsc 输出文件
   },
-
   // ==========================================
-  // ⚡ 【编译性能与输出控制】（纯 Bun 专属优化）
+  // 📂 【文件扫描范围】（性能关键）
   // ==========================================
-  "skipLibCheck": true, // 跳过 .d.ts 声明文件的完整检查（大幅提升速度）
-  "incremental": true, // 启用增量编译（配合 Bun 缓存，重编译极快）
-  "noEmit": true // Bun 直接运行 TS，无需 tsc 输出文件
- },
-
- // ==========================================
- // 📂 【文件扫描范围】（性能关键）
- // ==========================================
- // "include": ["./**/*"],
- "exclude": ["node_modules", "dist", ".git"]
+  // "include": ["./**/*"],
+  "exclude": ["node_modules", "dist", ".git"]
 }

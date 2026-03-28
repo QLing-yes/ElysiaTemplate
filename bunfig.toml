@@ -3,7 +3,7 @@
 # 遥测
 telemetry = false
 # 设置日志级别
-logLevel = "debug" # "debug" | "warn" | "error"
+logLevel = "warn" # "debug" | "warn" | "error"
 # 降低内存使用量，但会牺牲性能
 # smol = true
 [install]
