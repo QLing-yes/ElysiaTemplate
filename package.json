@@ -4,7 +4,7 @@
  "type": "module",
  "scripts": {
   "menu": "bun run ./support/script/menu.ts",
-  "dev": "bun run script_generate && bun run --watch ./app/index.ts",
+  "dev": "bun run script_generate && bun run --watch ./app/cluster.ts",
   "fix": "bunx --bun @biomejs/biome check --write .",
   "generate": "bun run script_generate && bun run prisma_generate",
   "script_generate": "bun ./support/script/index.ts",

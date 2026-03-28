@@ -18,7 +18,7 @@ const app = new Elysia({
   .use(plugins)
   .onStart(() => {
     if (cluster.isPrimary) {
-      const service = `localhost:${process.env.PORT || 3000}`;
+      const service = `localhost:${process.env.PORT}`;
       logger.info(`${process.pid} service http://${service}`);
       logger.info(`openapi http://${service}/openapi`);
     }
@@ -26,6 +26,6 @@ const app = new Elysia({
   .onStop(() => {
     logger.info(`${process.pid} service stop`);
   })
-  .listen(process.env.PORT || 3000);
+  .listen(process.env.PORT!);
 
 export type APP = typeof app;
