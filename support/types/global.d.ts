@@ -1,4 +1,4 @@
-// import type * as common from "@/app/common";
+import type * as common from "@/app/common";
 import type routes from "@/app/plugins/routes.plug.ts";
 
 declare global {

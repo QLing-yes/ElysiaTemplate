@@ -6,9 +6,7 @@ import {
 
 export default (app: RouterType) =>
   app
-    .post("test", () => $g.success("test"), {
-      body: "UserInputCreate",
-    })
+    .post("test", () => $g.success("test"), { standard: t.String() })
     .get("/redis", async () => {
       await $g.redis.set("test", "hello world");
       const result = await $g.redis.get("test");
@@ -25,7 +23,7 @@ export default (app: RouterType) =>
       },
       {
         body: UserPlainInputCreate,
-        response: $g.resp(UserPlain),
+        response: $g.ResSchemaFun(UserPlain),
       },
     )
     .get(

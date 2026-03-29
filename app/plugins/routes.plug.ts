@@ -1,10 +1,13 @@
 import { Elysia } from "elysia";
+import * as $c from "@/app/common";
 import { logger } from "@/app/lib/logger";
+import plug_macro from "./macro.plug";
 import plug_schemas from "./schemas.plug";
 
 /** 路由插件 */
 export default new Elysia({ name: __filename })
   .use(plug_schemas)
+  .use(plug_macro)
   .onBeforeHandle(({ request, body }) => {
     logger.info(`[请求] ${request.method} ${request.url}`, { body });
   })
@@ -22,5 +25,5 @@ export default new Elysia({ name: __filename })
     });
     set.status = 500;
     set.headers["content-type"] = "application/json";
-    return $g.error(err.message, 500);
+    return $c.error(err.message, 500);
   });
