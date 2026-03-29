@@ -19,6 +19,7 @@ export type ResType<T = unknown> = (typeof ResSchema)["static"] & {
 export function ResSchemaFun<T extends TSchema>(payload?: T) {
   return t.Intersect([
     t.Omit(ResSchema, ["data"]),
-    t.Object({ data: payload || t.Unknown() }),
+    // 接受 null 值，以处理error响应情况
+    t.Object({ data: t.Union([payload || t.Unknown(), t.Null()]) }),
   ]);
 }
