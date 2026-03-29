@@ -15,6 +15,7 @@ Project/
 │   │   └── schemas.ts        # 所有的数据模型                      
 │   ├── controller/           # 控制器层(`ctrl.ts` 结尾的文件将自动加载)
 │   ├── lib/                  
+│   │   ├── error.ts          # 全局错误与进程事件捕获处理
 │   │   ├── logger.ts         # 日志库
 │   │   ├── prisma.ts         # Prisma 客户端
 │   │   └── redis.ts          # Redis 客户端

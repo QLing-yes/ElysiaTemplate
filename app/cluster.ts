@@ -1,5 +1,6 @@
-// biome-ignore assist/source/organizeImports: Global variables
+import "@/app/lib/error";
 import * as common from "@/app/common";
+
 /** 唯一全局变量（不建议增加更多了） */
 (globalThis as unknown as { $g: typeof common }).$g = common;
 
@@ -10,35 +11,34 @@ import { logger } from "@/app/lib/logger";
 // 单机多进程集群模式, 利用服务器所有CPU核心
 // https://elysiajs.com/patterns/deploy.html#cluster-mode
 
-const config = {
-  /** 是否启用集群模式 */
-  enabled: process.env.CLUSTER_ENABLED === "true",
-  /** worker 进程数量，默认 CPU 核心数，至少 1 */
-  workers: Math.max(
-    1,
-    Math.min(
-      Number(process.env.CLUSTER_WORKERS) || os.availableParallelism(),
-      os.availableParallelism(),
-    ),
-  ),
-  /** worker 崩溃后重启延迟（毫秒） */
-  restartDelay: Number(process.env.CLUSTER_RESTART_DELAY) || 1000,
-  /** 时间窗口内允许的最大重启次数，超过则熔断 */
-  maxRestarts: Number(process.env.CLUSTER_MAX_RESTARTS) || 5,
-  /** 重启计数的统计时间窗口（毫秒） */
-  restartWindow: Number(process.env.CLUSTER_RESTART_WINDOW) || 60000,
-} as const;
-
 const port = process.env.PORT;
 
-if (!config.enabled) {
-  // 集群模式未启用，直接加载应用入口
+// 集群模式未启用，直接加载应用入口（单进程）
+if (process.env.CLUSTER_ENABLED !== "true") {
   logger.info(
-    `[cluster] disabled ${process.pid} http://localhost:${process.env.PORT}/openapi`,
+    `server ${process.pid} http://localhost:${process.env.PORT}/openapi`,
   );
-
   await import("./index");
-} else if (cluster.isPrimary) {
+}
+// 集群模式（主进程）
+else if (cluster.isPrimary) {
+  const config = {
+    /** worker 进程数量，默认 CPU 核心数，至少 1 */
+    workers: Math.max(
+      1,
+      Math.min(
+        Number(process.env.CLUSTER_WORKERS) || os.availableParallelism(),
+        os.availableParallelism(),
+      ),
+    ),
+    /** worker 崩溃后重启延迟（毫秒） */
+    restartDelay: Number(process.env.CLUSTER_RESTART_DELAY) || 1000,
+    /** 时间窗口内允许的最大重启次数，超过则熔断 */
+    maxRestarts: Number(process.env.CLUSTER_MAX_RESTARTS) || 5,
+    /** 重启计数的统计时间窗口（毫秒） */
+    restartWindow: Number(process.env.CLUSTER_RESTART_WINDOW) || 60000,
+  } as const;
+
   let restartCount = 0; // 当前窗口内的重启次数
   let windowStart = Date.now(); // 当前统计窗口的起始时间
   let isShuttingDown = false; // 关闭标志，防止熔断触发 exit 事件重入
@@ -89,8 +89,10 @@ if (!config.enabled) {
   process.on("SIGINT", () => shutdown("SIGINT"));
 
   logger.info(
-    `[cluster] workers: ${config.workers}\nhttp://localhost:${port}/openapi`,
+    `[cluster] workers: ${config.workers}\n server http://localhost:${port}/openapi`,
   );
-} else {
+} 
+// 集群模式下的 worker 进程
+else {
   await import("./index");
 }

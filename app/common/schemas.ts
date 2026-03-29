@@ -8,7 +8,7 @@ export const ResSchema = t.Object({
   code: t.Number(),
   /** 响应数据 */
   data: t.Unknown(),
-})
+});
 
 /** 响应模型(类型) */
 export type ResType<T = unknown> = (typeof ResSchema)["static"] & {

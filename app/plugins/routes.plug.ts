@@ -27,7 +27,7 @@ export default new Elysia({ name: __filename })
     } catch (error) {
       logger.error((error as Error).message);
     }
-    
+
     logger.error(`[错误] ${request.method} ${new URL(request.url).pathname}`, {
       code,
       msg: err.message,
