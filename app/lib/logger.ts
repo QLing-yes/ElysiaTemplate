@@ -43,10 +43,7 @@ export interface LoggerOptions {
   highWaterMark?: number;
   /** 保留归档文件的最大数量，0 表示不限制，默认 `0` */
   maxFiles?: number;
-  /**
-   * 同步写入模式，默认 `false`
-   * 开启后每条日志直接 appendFileSync，无缓冲丢失风险，但性能较低
-   */
+  /** 同步写入模式，默认 `false` */
   sync?: boolean;
 }
 

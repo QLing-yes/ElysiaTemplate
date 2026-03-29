@@ -17,7 +17,17 @@ export default new Elysia({ name: __filename })
   // 	});
   // })
   .onError(({ error: errObj, code, request, set }) => {
-    const err = errObj as Error;
+    const err = errObj instanceof Error ? errObj : new Error(String(errObj));
+
+    try {
+      if (code === "VALIDATION") {
+        const parsed = JSON.parse(err.message);
+        err.message = parsed.summary;
+      }
+    } catch (error) {
+      logger.error((error as Error).message);
+    }
+    
     logger.error(`[错误] ${request.method} ${new URL(request.url).pathname}`, {
       code,
       msg: err.message,
@@ -25,5 +35,5 @@ export default new Elysia({ name: __filename })
     });
     set.status = 500;
     set.headers["content-type"] = "application/json";
-    return $c.error(err.message, 500);
+    return $c.error(err.message, set.status);
   });

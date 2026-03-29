@@ -6,24 +6,37 @@ import {
 
 export default (app: RouterType) =>
   app
-    .post("test", () => $g.success("test"), { standard: t.String() })
-    .get("/redis", async () => {
-      await $g.redis.set("test", "hello world");
-      const result = await $g.redis.get("test");
-      return $g.success(result);
+    .post("success", () => $g.success("succData"), { standard: t.String() })
+    .post("err", () => $g.error("errData", 0), { standard: t.String() })
+    .post("err2", () => $g.success({ a: { b: 1 } }), {
+      standard: t.Object({ a: t.Object({ b: t.String() }) }),
     })
+    .post("throwErr", () => {
+      throw new Error("throwErrData");
+    })
+    .post("throwData", () => {
+      throw 11;
+    })
+    .get(
+      "/redis",
+      async () => {
+        await $g.redis.set("test", "hello world");
+        const result = await $g.redis.get("test");
+        return $g.success(result);
+      },
+      { standard: t.Union([t.String(), t.Null()]) },
+    )
     .put(
       "/create",
       async ({ body }) => {
         const res = await $g.prisma.user.create({
           data: body,
         });
-        // return res;
         return $g.success(res);
       },
       {
         body: UserPlainInputCreate,
-        response: $g.ResSchemaFun(UserPlain),
+        standard: UserPlain,
       },
     )
     .get(
@@ -32,14 +45,12 @@ export default (app: RouterType) =>
         const user = await $g.prisma.user.findUnique({
           where: { id: Number(id) },
         });
-
         if (!user) return status(404, "User not found");
-
-        return user;
+        return $g.success(user);
       },
       {
         response: {
-          200: UserPlain,
+          200: $g.ResSchemaFun(UserPlain),
           404: t.String(),
         },
       },
