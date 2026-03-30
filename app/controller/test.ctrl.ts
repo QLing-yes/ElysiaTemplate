@@ -6,16 +6,17 @@ import {
 
 export default (app: RouterType) =>
   app
+    .get("test", () => $g.success("test"))
     .post("success", () => $g.success("succData"), { standard: t.String() })
     .post("err", () => $g.error("errData", 0), { standard: t.String() })
     .post("err2", () => $g.success({ a: { b: 1 } }), {
       standard: t.Object({ a: t.Object({ b: t.String() }) }),
     })
     .post("throwErr", () => {
-      throw new Error("throwErrData");
+      throw new Error("throwErr");
     })
     .post("throwData", () => {
-      throw 11;
+      throw "throwData";
     })
     .get(
       "/redis",

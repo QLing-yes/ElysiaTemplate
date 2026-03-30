@@ -21,6 +21,7 @@ export default new Elysia({ name: __filename })
 
     try {
       if (code === "VALIDATION") {
+        set.status = 400;
         const parsed = JSON.parse(err.message);
         err.message = parsed.summary;
       }
@@ -33,7 +34,9 @@ export default new Elysia({ name: __filename })
       msg: err.message,
       stack: err.stack,
     });
-    set.status = 500;
+
+    if (typeof set.status !== "number") set.status = 500;
+
     set.headers["content-type"] = "application/json";
     return $c.error(err.message, set.status);
   });

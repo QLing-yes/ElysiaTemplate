@@ -91,7 +91,7 @@ else if (cluster.isPrimary) {
   logger.info(
     `[cluster] workers: ${config.workers}\n server http://localhost:${port}/openapi`,
   );
-} 
+}
 // 集群模式下的 worker 进程
 else {
   await import("./index");

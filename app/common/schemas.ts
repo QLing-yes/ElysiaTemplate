@@ -11,7 +11,7 @@ export const ResSchema = t.Object({
 });
 
 /** 响应模型(类型) */
-export type ResType<T = unknown> = (typeof ResSchema)["static"] & {
+export type ResType<T> = (typeof ResSchema)["static"] & {
   data: T;
 };
 
@@ -19,7 +19,6 @@ export type ResType<T = unknown> = (typeof ResSchema)["static"] & {
 export function ResSchemaFun<T extends TSchema>(payload?: T) {
   return t.Intersect([
     t.Omit(ResSchema, ["data"]),
-    // 接受 null 值，以处理error响应情况
-    t.Object({ data: t.Union([payload || t.Unknown(), t.Null()]) }),
+    t.Object({ data:  payload || t.Null() }),
   ]);
 }
