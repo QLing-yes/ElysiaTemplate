@@ -1,16 +1,26 @@
 import { t } from "elysia";
-import {
-  UserPlain,
-  UserPlainInputCreate,
-} from "@/support/generated/prismabox/User";
+import { UserPlain } from "@/support/generated/prismabox/User";
 
 export default (app: RouterType) =>
   app
-    .get("test", () => $g.success("test"))
-    .post("success", () => $g.success("succData"), { standard: t.String() })
-    .post("err", () => $g.error("errData", 0), { standard: t.String() })
+    .post(
+      "test",
+      ({ body }) => {
+        if (body.a > 2) {
+          return $g.error("no > 2");
+        }
+        return $g.success(body.a + 1);
+      },
+      {
+        body: t.Object({ a: t.Number() }),
+        // res: t.Union([t.Number(), t.Null()]),
+        res: t.Number(),
+      },
+    )
+    .post("success", () => $g.success("succData"), { res: t.String() })
+    .post("err", () => $g.error("errData", 0), { res: t.String() })
     .post("err2", () => $g.success({ a: { b: 1 } }), {
-      standard: t.Object({ a: t.Object({ b: t.String() }) }),
+      res: t.Object({ a: t.Object({ b: t.String() }) }),
     })
     .post("throwErr", () => {
       throw new Error("throwErr");
@@ -25,7 +35,7 @@ export default (app: RouterType) =>
         const result = await $g.redis.get("test");
         return $g.success(result);
       },
-      { standard: t.Union([t.String(), t.Null()]) },
+      { res: t.String() },
     )
     .put(
       "/create",
@@ -36,8 +46,8 @@ export default (app: RouterType) =>
         return $g.success(res);
       },
       {
-        body: UserPlainInputCreate,
-        standard: UserPlain,
+        body: "UserPlainInputCreate",
+        res: UserPlain,
       },
     )
     .get(
