@@ -1,7 +1,7 @@
 import { t } from "elysia";
 import { UserPlain } from "@/support/generated/prismabox/User";
 
-export default (app: RouterType) =>
+export default $g.ctrl((app) =>
   app
     .post(
       "test",
@@ -65,4 +65,5 @@ export default (app: RouterType) =>
           404: t.String(),
         },
       },
-    );
+    ),
+);
