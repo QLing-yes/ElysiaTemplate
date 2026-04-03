@@ -9,10 +9,10 @@ export default new Elysia({ name: __filename })
   .use(plug_schemas)
   .use(plug_macro)
   .onBeforeHandle(({ request, body }) => {
-    logger.info(`[请求] ${request.method} ${request.url}`, body !== undefined ? { body } : body);
+    logger.info(`[request] ${request.method} ${request.url}`, body !== undefined ? { body } : body);
   })
   // .onAfterResponse(({ set, request, responseValue }) => {
-  // 	logger.info(`[结束] ${request.method} ${request.url} ${set.status}`, {
+  // 	logger.info(`[response] ${request.method} ${request.url} ${set.status}`, {
   // 		responseValue,
   // 	});
   // })
@@ -26,14 +26,10 @@ export default new Elysia({ name: __filename })
         err.message = parsed.summary;
       }
     } catch (error) {
-      logger.error((error as Error).message);
+      logger.error((error as Error).message, (error as Error));
     }
 
-    logger.error(`[错误] ${request.method} ${new URL(request.url).pathname}`, {
-      code,
-      msg: err.message,
-      stack: err.stack,
-    });
+    logger.error(`${request.method} ${new URL(request.url).pathname}`, { code, msg: err.message, stack: err.stack });
 
     if (typeof set.status !== "number") set.status = 500;
 

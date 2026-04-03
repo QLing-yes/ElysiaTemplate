@@ -24,6 +24,9 @@ export type LogLevel = "debug" | "info" | "warn" | "error";
 /** 文件轮转粒度 */
 export type RotateBy = "hour" | "day" | "month";
 
+/** 日志元数据类型 */
+export type Meta = Record<string, unknown> | Error | undefined | null;
+
 /** Logger 构造选项 */
 export interface LoggerOptions {
   /** 日志输出目录，默认 `logs` */
@@ -45,6 +48,8 @@ export interface LoggerOptions {
   maxFiles?: number;
   /** 同步写入模式，默认 `false` */
   sync?: boolean;
+  /** 格式化元数据的缩进空格数，默认 `2` */
+  formatted?: number;
 }
 
 // ─── 常量 ────────────────────────────────────────────────────────────────────
@@ -261,6 +266,9 @@ export class Logger {
   /** flush 锁，防止并发 flush 导致数据重复或丢失 */
   private flushing = false;
 
+  /** 格式化元数据的缩进空格数 */
+  private formatted: number = 2;
+
   /**
    * 创建 Logger 实例
    * @param options 构造选项
@@ -273,6 +281,7 @@ export class Logger {
     this.highWaterMark = options.highWaterMark ?? 1024 * 1024;
     this.maxFiles = options.maxFiles ?? 0;
     this.sync = options.sync ?? false;
+    this.formatted = options.formatted ?? 2;
 
     mkdirSync(this.dir, { recursive: true });
     instances.add(this);
@@ -285,7 +294,7 @@ export class Logger {
     if (!this.sync) {
       const interval = options.flushInterval ?? 1000;
       this.timer = setInterval(() => {
-        this.flush().catch(() => {});
+        this.flush().catch(() => { });
       }, interval);
       this.timer.unref();
     }
@@ -298,7 +307,7 @@ export class Logger {
    * @param msg  消息文本
    * @param meta 附加元数据
    */
-  debug(msg: string, meta?: Record<string, unknown>): void {
+  debug(msg: string, meta?: Meta): void {
     this.write("debug", msg, meta);
   }
 
@@ -307,7 +316,7 @@ export class Logger {
    * @param msg  消息文本
    * @param meta 附加元数据
    */
-  info(msg: string, meta?: Record<string, unknown>): void {
+  info(msg: string, meta?: Meta): void {
     this.write("info", msg, meta);
   }
 
@@ -316,7 +325,7 @@ export class Logger {
    * @param msg  消息文本
    * @param meta 附加元数据
    */
-  warn(msg: string, meta?: Record<string, unknown>): void {
+  warn(msg: string, meta?: Meta): void {
     this.write("warn", msg, meta);
   }
 
@@ -325,7 +334,7 @@ export class Logger {
    * @param msg  消息文本
    * @param meta 附加元数据
    */
-  error(msg: string, meta?: Record<string, unknown>): void {
+  error(msg: string, meta?: Meta): void {
     this.write("error", msg, meta);
   }
 
@@ -395,7 +404,7 @@ export class Logger {
   private write(
     level: LogLevel,
     msg: string,
-    meta?: Record<string, unknown>,
+    meta?: Meta,
   ): void {
     if (LEVEL_RANK[level] < this.minLevel) return;
     if (this.closed) return;
@@ -406,8 +415,10 @@ export class Logger {
 
     this.rotateIfNeeded(segment);
 
-    const safe = this.safeMeta(meta);
-    const metaJson = safe ? JSON.stringify(safe) : null;
+    meta = this.sanitizeMeta(meta);
+
+    const safe = meta;
+    const metaJson = safe ? JSON.stringify(safe, null, this.formatted) : null;
     const line = this.buildLine(level, msg, time, metaJson);
 
     if (this.sync) {
@@ -417,6 +428,16 @@ export class Logger {
     }
 
     if (this.toStdout) this.printStdout(level, msg, metaJson, time);
+  }
+
+  /**
+   * 规范化元数据：处理特殊类型对象
+   * @param meta 元数据
+   * @returns 规范化后的元数据
+   */
+  private sanitizeMeta(meta?: Meta) {
+    if (meta instanceof Error) return { name: meta.name, msg: meta.message, stack: meta.stack };
+    return meta;
   }
 
   /**
@@ -555,24 +576,6 @@ export class Logger {
     const label = level.toUpperCase().padEnd(5);
     const metaStr = metaJson ? `\n${metaJson}` : "";
     return `${time} [${label}] ${msg}${metaStr}\n`;
-  }
-
-  /**
-   * 剔除 meta 中与核心字段（time / level / msg）冲突的 key
-   * 无冲突时返回原引用，避免不必要的对象分配
-   * @param meta 原始附加元数据
-   * @returns 安全的 meta 对象，或 null
-   */
-  private safeMeta(
-    meta: Record<string, unknown> | undefined,
-  ): Record<string, unknown> | null {
-    if (!meta) return null;
-
-    const hasConflict = "time" in meta || "level" in meta || "msg" in meta;
-    if (!hasConflict) return meta;
-
-    const { time: _t, level: _l, msg: _m, ...rest } = meta;
-    return Object.keys(rest).length ? rest : null;
   }
 
   /**

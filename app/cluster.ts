@@ -48,7 +48,7 @@ else if (cluster.isPrimary) {
 
   cluster.on("exit", (worker, code, signal) => {
     logger.error(
-      `[cluster] worker ${worker.process.pid} exited (${signal ?? `code ${code}`})`,
+      `[cluster] worker ${worker.process.pid} exited (${signal ?? `code ${code}`})`
     );
 
     // 主动关闭或已在关闭中，不重启

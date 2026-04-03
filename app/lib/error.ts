@@ -7,10 +7,7 @@ const logger = new Logger({ sync: true, stdout: false });
  * 当同步代码抛出异常且没有任何 try/catch 捕获时触发
  */
 process.on("uncaughtException", (error) => {
-  logger.error("uncaughtException", {
-    message: error.message,
-    stack: error.stack,
-  });
+  logger.error("uncaughtException", error);
   console.error(error);
 });
 
