@@ -8,6 +8,6 @@
 格式：合理换行，代码精简无冗余
 
 # 信息参考优先级
-文档参考：`.agents/skills/elysiajs/SKILL.md`、`**/SKILL.md`、`**/*.md`。
+文档参考：`.agents/skills/elysiajs/SKILL.md`、任意目录下的`SKILL.md`、项目内所有`*.md`文件。
 根据问题关键词使用MCP: `elysia`、`bun`、`deepwiki`、`context7`。
 官方文档：`https://elysiajs.com/llms.txt`、`https://elysiajs.com/llms-full.txt`、`https://github.com/elysiajs/documentation`。
