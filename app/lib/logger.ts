@@ -48,7 +48,7 @@ export interface LoggerOptions {
   maxFiles?: number;
   /** 同步写入模式，默认 `false` */
   sync?: boolean;
-  /** 格式化元数据的缩进空格数，默认 `2` */
+  /** 格式化元数据的缩进空格数，默认 `1` */
   formatted?: number;
 }
 
@@ -267,7 +267,7 @@ export class Logger {
   private flushing = false;
 
   /** 格式化元数据的缩进空格数 */
-  private formatted: number = 2;
+  private formatted: number = 1;
 
   /**
    * 创建 Logger 实例
@@ -281,7 +281,7 @@ export class Logger {
     this.highWaterMark = options.highWaterMark ?? 1024 * 1024;
     this.maxFiles = options.maxFiles ?? 0;
     this.sync = options.sync ?? false;
-    this.formatted = options.formatted ?? 2;
+    this.formatted = options.formatted ?? 1;
 
     mkdirSync(this.dir, { recursive: true });
     instances.add(this);
