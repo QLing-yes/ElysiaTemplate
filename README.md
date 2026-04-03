@@ -3,7 +3,8 @@
 ## 非正式版本
 
 - MVC后端、自动路由、日志系统、端到端类型安全，更多即将到来。
-- 目标：一整套前后端分离模板，通过AI生成前端代码，减少开发成本。
+- 目标：先实现一整套前后端分离模板 为日后AI生成代码打下基础。
+- 打算将Drizzle作为默认的ORM工具，Prisma作为可选的。
 
 ## 项目结构
 
@@ -11,17 +12,17 @@
 Project/
 ├── public/                   # 静态资源（自动路由静态资源）
 ├── app/
-│   ├── common/             
+│   ├── common/
 │   │   └── index.ts          # 全局模块入口（已注册到全局“$g”建议控制器中使用，其他位置建议手动导入）
-│   │   └── schemas.ts        # 数据模型（会自动使用elysia.model()注册）
-│   │   └── schemaDerive.ts   # 数据模型派生类型和方法
+│   │   └── schemas.ts        # 数据模型（自动使用elysia.model注册）
+│   │   └── schemaDerive.ts   # 数据模型的派生类型和方法
 │   ├── controller/           # 控制器层(`ctrl.ts` 结尾的文件将自动加载)
-│   ├── lib/                  
+│   ├── lib/
 │   │   ├── error.ts          # 全局错误与进程事件捕获处理
 │   │   ├── logger.ts         # 日志库
 │   │   ├── prisma.ts         # Prisma 客户端
 │   │   └── redis.ts          # Redis 客户端
-│   ├── plugins/              
+│   ├── plugins/
 │   │   ├── index.plug.ts     # 全局插件
 │   │   └── macro.plug.ts     # 宏插件
 │   │   └── routes.plug.ts    # 路由插件
@@ -29,10 +30,10 @@ Project/
 │   ├── utils/                # 工具函数
 │   └── cluster.ts            # 单机多进程集群模式入口
 │   └── index.ts              # 应用入口
-├── logs/                     
+├── logs/
 ├── prisma/                   # Prisma ORM 配置目录
 │   ├── migrations/           # 数据库迁移文件目录
-│   │   └── migration.sql     
+│   │   └── migration.sql
 │   └── schema.prisma         # Prisma 数据模型
 ├── test/                     # Eden 测试目录
 ├── support/                  # 辅助脚本目录（无需关心）

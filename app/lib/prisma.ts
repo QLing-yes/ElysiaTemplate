@@ -1,4 +1,5 @@
 import { PrismaMariaDb } from "@prisma/adapter-mariadb";
+import { logger } from "@/app/lib/logger";
 import { PrismaClient } from "@/support/generated/prisma";
 
 const adapter = new PrismaMariaDb({
@@ -12,4 +13,9 @@ const adapter = new PrismaMariaDb({
 /** prisma客户端 */
 const prisma = new PrismaClient({ adapter });
 
-export { prisma };
+prisma
+  .$connect()
+  .then(() => logger.info("[prisma] connected successfully"))
+  .catch(err => logger.error(`[prisma] connection failed:${err}`));
+
+export default prisma;

@@ -1,5 +1,5 @@
 import { logger } from "@/app/lib/logger";
-import { prisma } from "@/app/lib/prisma";
+import prisma from "@/app/lib/prisma";
 import redis from "@/app/lib/redis";
 import type routes from "@/app/plugins/routes.plug.ts";
 import { ResSchemaFun, type ResType } from "./schemaDerive";

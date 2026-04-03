@@ -9,7 +9,7 @@ export default new Elysia({ name: __filename })
   .use(plug_schemas)
   .use(plug_macro)
   .onBeforeHandle(({ request, body }) => {
-    logger.info(`[请求] ${request.method} ${request.url}`, { body });
+    logger.info(`[请求] ${request.method} ${request.url}`, body !== undefined ? { body } : body);
   })
   // .onAfterResponse(({ set, request, responseValue }) => {
   // 	logger.info(`[结束] ${request.method} ${request.url} ${set.status}`, {
