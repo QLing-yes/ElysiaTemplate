@@ -13,9 +13,14 @@ const adapter = new PrismaMariaDb({
 /** prisma客户端 */
 const prisma = new PrismaClient({ adapter });
 
-prisma
-  .$connect()
-  .then(() => logger.info("[prisma] connected successfully"))
-  .catch(err => logger.error(`[prisma] connection failed:${err}`));
+async function isAlive() {
+  try {
+    await prisma.$queryRaw`SELECT 1`;
+    logger.info("[prisma] connected successfully");
+  } catch (err) {
+    logger.error(`[prisma] connection failed:${err}`);
+  }
+}
+isAlive()
 
 export default prisma;

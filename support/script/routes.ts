@@ -1,4 +1,4 @@
-import { filePathTree, write } from "@/app/utils/nodejs_file";
+import { filePathTree, write } from "@/app/utils/file";
 
 interface DirInfo {
   idx: number;

@@ -16,7 +16,7 @@ Project/
 │   │   └── index.ts          # 全局模块入口 (已注册到全局“$g”建议控制器中使用，其他位置建议手动导入)
 │   │   └── schemas.ts        # 数据模型 (自动使用elysia.model注册)
 │   │   └── schemaDerive.ts   # 数据模型的派生类型和方法
-│   ├── controller/           # 控制器层 (`ctrl.ts` 结尾的文件将自动加载)
+│   ├── controller/           # 控制器层 (`ctrl.ts` 结尾的文件将自动加载,改变时自动更新路由)
 │   ├── lib/
 │   │   ├── error.ts          # 全局错误与进程事件捕获处理
 │   │   ├── logger.ts         # 日志库
@@ -52,7 +52,6 @@ bun i
 bun run generate
 bun run dev
 ```
-- 注意新增或删除控制器文件后，需要重新运行 `bun run script_generate` 来更新路由。
 
 ## 命令
 
