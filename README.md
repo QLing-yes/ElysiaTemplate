@@ -3,6 +3,7 @@
 ## 项目暂停中
 
 准备打造一个适合自己的AI工作台。
+后续作为[aicode](https://github.com/QLing-yes/aicode) 底座。
 
 ## 预发布版本
 
