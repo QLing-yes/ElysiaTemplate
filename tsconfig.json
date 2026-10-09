@@ -4,7 +4,7 @@
     // 🎯 【Bun 原生环境与模块基础】（核心配置）
     // ==========================================
     "lib": ["ESNext"], // 仅引入最新 ES 标准类型（纯 Bun 无 DOM/浏览器 API）
-    "types": ["bun-types"], // 引入 Bun 原生 API 类型提示（必须！否则无法识别 Bun.file/Bun.serve 等）
+    "types": ["bun"], // 引入 Bun 官方类型 @types/bun（底层引用 bun-types）
     "target": "ESNext", // 编译目标为最新 ES 版本（Bun 原生全支持，无需语法降级）
     "module": "Preserve", // 完全保留原始 ESM 模块语法（交给 Bun 处理，最大化 Tree Shaking）
     "moduleResolution": "bundler", // 采用现代 Bundler 模块解析（适配 Bun 的 package.json exports/imports 字段）
@@ -40,10 +40,12 @@
     // "experimentalDecorators": true, // 实验版装饰器
     // "emitDecoratorMetadata": true, // 实验版装饰器元数据
     // "decorators": true, // 最新官方标准装饰器
-    // --- 路径别名（简化深层导入）---
-    "baseUrl": ".",
+    // --- 路径别名（简化深层代码）---
+    // TS 5.4+ 无需 baseUrl，paths 默认相对本 tsconfig 解析
+    // "*" 通配替代旧 baseUrl:"."，让生成产物中的 app/... 根路径导入可解析
     "paths": {
-      "@/*": ["./*"]
+      "@/*": ["./*"],
+      "*": ["./*"]
     },
     // ==========================================
     // ⚡ 【编译性能与输出控制】（纯 Bun 专属优化）

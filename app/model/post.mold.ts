@@ -6,7 +6,7 @@ import {
   text,
   varchar,
 } from "drizzle-orm/mysql-core";
-import { createInsertSchema } from "drizzle-orm/typebox-legacy";
+import { createInsertSchema } from "drizzle-orm/typebox";
 
 export const table = mysqlTable("post", {
   id: serial().primaryKey(),

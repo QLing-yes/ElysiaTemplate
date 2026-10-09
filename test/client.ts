@@ -8,3 +8,7 @@ async function _() {
   (await client.test.post({ a: 1 })).data!.data;
   (await client.routers.post()).data!.data;
 }
+
+// 手动执行：bun ./test/client.ts（需先启动服务）
+_();
+

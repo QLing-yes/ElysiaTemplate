@@ -1,4 +1,5 @@
-import { Elysia, type TSchema } from "elysia";
+import { Elysia } from "elysia";
+import type { TSchema } from "elysia/type";
 import * as Schema from "@/app/common/schemaDerive";
 
 /** 标准响应宏插件 - 统一返回格式与校验 */

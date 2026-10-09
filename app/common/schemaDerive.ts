@@ -1,8 +1,9 @@
-import { type TSchema, t } from "elysia";
+import { t } from "elysia";
+import type { Static, TSchema } from "elysia/type";
 import * as m from "./schemas";
 
 /** 响应模型(类型) */
-export type ResType<T> = (typeof m.ResSchema)["static"] & {
+export type ResType<T> = Static<typeof m.ResSchema> & {
   data: T;
 };
 

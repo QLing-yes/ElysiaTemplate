@@ -7,51 +7,51 @@ export default $g.ctrl((app) =>
   app
     .post(
       "routers",
+      {
+        res: t.Array(t.Any()),
+      },
       () => {
         const list: string[] = controller.routes.map(
           (item) => `[${item.method}]${item.path}`,
         );
         return $g.success(list);
       },
-      {
-        res: t.Array(t.Any()),
-      },
     )
     .post(
       "test",
+      {
+        body: t.Object({ a: t.Number() }),
+        // res: t.Union([t.Number(), t.Null()]),
+        res: t.Number(),
+      },
       ({ body }) => {
         if (body.a > 2) {
           return $g.error("no > 2");
         }
         return $g.success(body.a + 1);
       },
-      {
-        body: t.Object({ a: t.Number() }),
-        // res: t.Union([t.Number(), t.Null()]),
-        res: t.Number(),
-      },
     )
     .post(
       "success",
+      { res: t.String() },
       () => {
         return $g.success("succData");
       },
-      { res: t.String() },
     )
     .post(
       "err",
+      { res: t.String() },
       () => {
         return $g.error("errData", 0);
       },
-      { res: t.String() },
     )
     .post(
       "err2",
-      () => {
-        return $g.success({ a: { b: 1 } });
-      },
       {
         res: t.Object({ a: t.Object({ b: t.String() }) }),
+      },
+      () => {
+        return $g.success({ a: { b: 1 } });
       },
     )
     .post("throwErr", () => {
@@ -62,12 +62,12 @@ export default $g.ctrl((app) =>
     })
     .get(
       "/redis",
+      { res: t.String() },
       async () => {
         await $g.redis.set("test", "hello world");
         const result = await $g.redis.get("test");
         return $g.success(result);
       },
-      { res: t.String() },
     )
 
     // ===== 增删改查 测试 =====
@@ -75,10 +75,6 @@ export default $g.ctrl((app) =>
     /** 新增用户 */
     .post(
       "user/create",
-      async ({ body }) => {
-        const row = await $g.db.insert(user).values(body).$returningId();
-        return $g.success(row);
-      },
       {
         body: t.Object({
           email: t.String({ format: "email" }),
@@ -86,21 +82,26 @@ export default $g.ctrl((app) =>
         }),
         res: t.Any(),
       },
+      async ({ body }) => {
+        const row = await $g.db.insert(user).values(body).$returningId();
+        return $g.success(row);
+      },
     )
 
     /** 查询所有用户 */
     .get(
       "user/list",
+      { res: t.Any() },
       async () => {
         const rows = await $g.db.query.user.findMany();
         return $g.success(rows);
       },
-      { res: t.Any() },
     )
 
     /** 按ID查询用户 */
     .get(
       "user/detail/:id",
+      { res: t.Any() },
       async ({ params }) => {
         const row = await $g.db.query.user.findFirst({
           where: { id: +params.id },
@@ -110,12 +111,18 @@ export default $g.ctrl((app) =>
         }
         return $g.success(row);
       },
-      { res: t.Any() },
     )
 
     /** 更新用户 */
     .put(
       "user/update/:id",
+      {
+        body: t.Object({
+          email: t.Optional(t.String({ format: "email" })),
+          name: t.Optional(t.String()),
+        }),
+        res: t.Any(),
+      },
       async ({ params, body }) => {
         const [{ affectedRows }] = await $g.db
           .update(user)
@@ -126,18 +133,12 @@ export default $g.ctrl((app) =>
         }
         return $g.success(null, "更新成功");
       },
-      {
-        body: t.Object({
-          email: t.Optional(t.String({ format: "email" })),
-          name: t.Optional(t.String()),
-        }),
-        res: t.Any(),
-      },
     )
 
     /** 删除用户 */
     .delete(
       "user/delete/:id",
+      { res: t.Any() },
       async ({ params }) => {
         const [{ affectedRows }] = await $g.db
           .delete(user)
@@ -147,16 +148,11 @@ export default $g.ctrl((app) =>
         }
         return $g.success(null, "删除成功");
       },
-      { res: t.Any() },
     )
 
     /** 新增文章 */
     .post(
       "post/create",
-      async ({ body }) => {
-        const row = await $g.db.insert(post).values(body).$returningId();
-        return $g.success(row);
-      },
       {
         body: t.Object({
           title: t.String(),
@@ -166,17 +162,21 @@ export default $g.ctrl((app) =>
         }),
         res: t.Any(),
       },
+      async ({ body }) => {
+        const row = await $g.db.insert(post).values(body).$returningId();
+        return $g.success(row);
+      },
     )
 
     /** 查询所有文章（含作者信息） */
     .get(
       "post/list",
+      { res: t.Any() },
       async () => {
         const rows = await $g.db.query.post.findMany({
           with: { author: true },
         });
         return $g.success(rows);
       },
-      { res: t.Any() },
     ),
 );
