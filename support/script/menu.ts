@@ -13,7 +13,7 @@ import { entry, execCmd, type MenuItem } from "@/app/utils/menu-ui.ts";
 // ── 构建配置 ─────────────────────────────────────────────────
 
 const main = "./app/cluster.ts";
-const outdir = "./dist";
+const outdir = "./";
 
 /**
  * Bun 跨平台单文件可执行文件构建函数

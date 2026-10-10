@@ -14,6 +14,7 @@
 /build
 /dist
 generated/
+/bun-*.*
 
 # misc
 .DS_Store

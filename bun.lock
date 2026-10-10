@@ -5,6 +5,7 @@
     "": {
       "name": "my-elysia-app",
       "dependencies": {
+        "@elysia/cors": "next",
         "@elysia/eden": "next",
         "@elysia/openapi": "next",
         "@elysia/static": "next",
@@ -15,7 +16,7 @@
       },
       "devDependencies": {
         "@biomejs/biome": "2.4.13",
-        "@types/bun": "^1.4.2",
+        "@types/bun": "latest",
         "drizzle-kit": "1.0.0-rc.5-5935859",
       },
     },
@@ -40,6 +41,8 @@
     "@biomejs/cli-win32-x64": ["@biomejs/cli-win32-x64@2.4.13", "https://registry.npmmirror.com/@biomejs/cli-win32-x64/-/cli-win32-x64-2.4.13.tgz", { "os": "win32", "cpu": "x64" }, "sha512-tTcMkXyBrmHi9BfrD2VNHs/5rYIUKETqsBlYOvSAABwBkJhSDVb5e7wPukftsQbO3WzQkXe6kaztC6WtUOXSoQ=="],
 
     "@drizzle-team/brocli": ["@drizzle-team/brocli@0.12.1", "https://registry.npmmirror.com/@drizzle-team/brocli/-/brocli-0.12.1.tgz", {}, "sha512-yHwomvolVafvUXhy5TdiJVkuNCxXn+bKOs2aWiWEQh/5YaV97Oa/abJz3dmx7lxgIUsUlS1Jl4mEfvJPo3YsVw=="],
+
+    "@elysia/cors": ["@elysia/cors@2.0.0-beta.1", "https://registry.npmmirror.com/@elysia/cors/-/cors-2.0.0-beta.1.tgz", { "peerDependencies": { "elysia": ">= 2.0.0-beta.1" } }, "sha512-dHb21xI4Dm7wcf5+rWLiLSwJARLAewnOzRjRk0wRMfBiLGA1t/CXsblzKUtwYRFhQCteUEGdhEace+6PF0UUKw=="],
 
     "@elysia/eden": ["@elysia/eden@2.0.0-beta.6", "https://registry.npmmirror.com/@elysia/eden/-/eden-2.0.0-beta.6.tgz", { "peerDependencies": { "elysia": ">= 2.0.0-beta.2" } }, "sha512-UYtYUiJ/OPwlkFZCe8QJ4Xc4VwXz7BykYruBDc4VQRMItWWGypsjMqwJUhQPG3D7A82GAU7q1goVwMcLyC6pYg=="],
 
