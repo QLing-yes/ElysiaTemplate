@@ -36,7 +36,12 @@ async function build(target: Bun.Build.CompileTarget, fileName?: string) {
     sourcemap: "linked",
     // 字节码缓存：启用构建时预编译，可提升 2-4 倍启动速度
     bytecode: true,
-
+    // 开启树摇优化，移除未使用的代码
+    treeShaking: true,
+    optimize: {
+        // 预编译 JS/TS 到字节码
+        bytecode: true
+    },
     // 单文件编译核心配置
     compile: {
       // 目标平台：指定跨编译的目标操作系统和架构
