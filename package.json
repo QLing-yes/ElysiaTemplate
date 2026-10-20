@@ -4,16 +4,21 @@
   "type": "module",
   "scripts": {
     "menu": "bun ./support/script/menu.ts",
+    
     "dev": "bun --parallel run watch_generate_script watch_dev",
     "start-hot": "NODE_ENV=production bun --hot ./app/cluster.ts",
     "start-hot-bg": "NODE_ENV=production bun --hot --background ./app/cluster.ts",
+
     "fix": "bunx --bun @biomejs/biome check --write .",
+
     "watch_dev": "bun --watch ./app/cluster.ts",
     "watch_generate_script": "bun ./support/script/index.ts watch",
+
     "generate": "bun --parallel 'generate_*'",
     "generate_script": "bun ./support/script/index.ts",
-    "drizzle_studio": "bun --bun run drizzle-kit studio",
-    "generate_drigrate_migrate": "bun --bun run drizzle-kit generate && bun --bun run drizzle-kit migrate"
+
+    "generate_drigrate_migrate": "bun --bun run drizzle-kit generate && bun --bun run drizzle-kit migrate",
+    "drizzle_studio": "bun --bun run drizzle-kit studio"
   },
   "dependencies": {
     "@elysia/cors": "next",

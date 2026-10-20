@@ -13,7 +13,7 @@
 # production
 /build
 /dist
-generated/
+# generated/
 /bun-*.*
 
 # misc

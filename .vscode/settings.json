@@ -1,4 +1,6 @@
 {
+  "npm.packageManager": "bun",
+  "npm.scriptRunner": "bun",
   "editor.guides.bracketPairs": "active",
   "typescript.suggest.paths": true,
   "javascript.suggest.paths": true,
