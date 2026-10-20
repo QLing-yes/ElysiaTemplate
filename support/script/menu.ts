@@ -9,6 +9,7 @@
  */
 
 import { entry, execCmd, type MenuItem } from "@/app/utils/menu-ui.ts";
+import { aot } from 'elysia/plugin/aot/bun'
 
 // ── 构建配置 ─────────────────────────────────────────────────
 
@@ -28,19 +29,21 @@ async function build(target: Bun.Build.CompileTarget, fileName?: string) {
   // 判断是否为 Windows 平台，用于条件应用 Windows 专属配置
   // const isWindows = target.includes("windows");
   const result = await Bun.build({
+    // AOT 预编译：指向真实的 Elysia 实例导出文件
+    plugins: [aot('./app/index.ts')],
     // 入口文件路径：指定应用的启动文件
     entrypoints: [main],
     // 输出模块格式：使用 ES Module 格式
     format: "esm",
     // Source Map 配置：生成链接式源码映射，便于生产环境调试
     sourcemap: "linked",
-    // 字节码缓存：启用构建时预编译，可提升 2-4 倍启动速度
-    bytecode: true,
     // 开启树摇优化，移除未使用的代码
     treeShaking: true,
+    // 字节码缓存：启用构建时预编译，可提升 2-4 倍启动速度
+    bytecode: true,
     optimize: {
-        // 预编译 JS/TS 到字节码
-        bytecode: true
+      // 预编译 JS/TS 到字节码
+      bytecode: true,
     },
     // 单文件编译核心配置
     compile: {
@@ -404,7 +407,7 @@ const menuItems: MenuItem[] = [
         fun: () => execCmd("bun --bun run drizzle-kit up"),
       },
     ],
-  }
+  },
 ];
 
 // ── 入口 ─────────────────────────────────────────────────────
