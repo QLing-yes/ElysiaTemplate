@@ -8,16 +8,21 @@ import cluster from "node:cluster";
 import os from "node:os";
 import { logger } from "@/app/lib/logger";
 
+const port = process.env.PORT;
+
+if (!port) {
+  logger.error("缺少环境变量 PORT，正在退出服务...");
+  process.exit(1);
+}
+
 (async () => {
   // 单机多进程集群模式, 利用服务器所有CPU核心
   // https://elysiajs.com/patterns/deploy.html#cluster-mode
 
-  const port = process.env.PORT;
-
   // 集群模式未启用，直接加载应用入口（单进程）
   if (process.env.CLUSTER_ENABLED !== "true") {
     logger.info(
-      `server ${process.pid} http://localhost:${process.env.PORT}/openapi`,
+      `server ${process.pid} http://localhost:${port}/openapi`,
     );
     await import("./index");
   }
