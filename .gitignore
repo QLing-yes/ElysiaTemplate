@@ -39,6 +39,7 @@ yarn-error.log*
 **/*.log
 **/logs/
 package-lock.json
+bun.lock
 **/*.bun
 bun.lockb
 

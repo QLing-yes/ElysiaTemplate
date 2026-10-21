@@ -12,7 +12,7 @@ if (!port) {
   // 集群模式未启用，直接加载应用入口（单进程）
   if (process.env.CLUSTER_ENABLED !== "true") {
     console.info(
-      `[cluster] server ${process.pid} http://localhost:${port}/openapi`,
+      `server ${process.pid} http://localhost:${port}/openapi`,
     );
     await import("./index");
     return;
@@ -40,7 +40,7 @@ if (!port) {
       cmd: ["bun", `${import.meta.dir}/index.ts`],
       stdout: "inherit",
       stderr: "inherit",
-      stdin: "ignore", // 避免多个子进程抢占终端输入，导致死锁或冲突
+      stdin: "ignore"
     });
 
     workers[index] = worker;

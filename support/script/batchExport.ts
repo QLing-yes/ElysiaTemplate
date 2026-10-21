@@ -1,4 +1,4 @@
-import { filePathTree, write } from "@/app/utils/file";
+import { filePathTree, writeIfChanged } from "@/app/utils/file";
 
 const confing = {
   /** 根目录 */
@@ -34,8 +34,5 @@ export default function generate(conf: Partial<typeof confing>) {
     })
     .join("\n");
 
-  const file = write(op.out);
-  file.write("//auto generated\n");
-  file.write(content);
-  file.close();
+  writeIfChanged(op.out, `//auto generated\n${content}`);
 }

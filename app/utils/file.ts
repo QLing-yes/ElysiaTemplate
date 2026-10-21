@@ -14,8 +14,23 @@ export function write(filePath: string, flags = "w"): fs.WriteStream {
   return fs.createWriteStream(filePath, {
     flags,
     mode: 0o666, // 文件权限：所有者可读写，组和其他用户可读写（rw-rw-rw-）
-    encoding: "utf8", // 编码格式：UTF-8
+    encoding: "utf8",
   });
+}
+
+/** 内容有变更时才写入文件
+ * @description 内容一致时跳过写入，避免无意义的 mtime 变化触发 `bun --watch` 重启
+ * @param filePath 目标文件路径
+ * @param content  完整文件内容
+ * @returns 是否实际写入
+ */
+export function writeIfChanged(filePath: string, content: string): boolean {
+  if (fs.existsSync(filePath) && fs.readFileSync(filePath, "utf8") === content) {
+    return false;
+  }
+  fs.mkdirSync(path.dirname(filePath), { recursive: true });
+  fs.writeFileSync(filePath, content, { encoding: "utf8", mode: 0o666 });
+  return true;
 }
 
 /** 创建符号链接（junction 类型）

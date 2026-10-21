@@ -20,15 +20,14 @@ export default new Elysia({ name: __filename })
   // global 作用域：连未匹配路由的 NotFound 也统一走本处理器（v2 默认 plugin 作用域不含 404）
   .error("global", ({ error: errObj, request, set }) => {
     const err = errObj instanceof Error ? errObj : new Error(String(errObj));
-    /** v2 稳定错误标识，替代 1.x 上下文中被移除的 code 字段 */
     const errCode = errObj instanceof ElysiaError ? errObj.code : err.name;
 
-    // 校验错误：v2 默认 422，保留项目原有 400 约定；message 已是纯文本摘要
     if (errObj instanceof ValidationError) {
-      logger.info("[validation] validation failed", {
-        path: new URL(request.url).pathname,
-      });
-      set.status = 400;
+      const on = errObj.type ?? "unknown";
+      const path = "property" in errObj.payload ? errObj.payload.property : "root";
+      /** 将 JSON Pointer 转为点路径：/data/a/b -> data.a.b */
+      const property = path.replace(/^\//, "").replace(/\//g, ".");
+      err.message = `[${on}] ${property} : ${err.message}`;
     }
 
     logger.error(`${request.method} ${new URL(request.url).pathname}`, {
@@ -37,8 +36,6 @@ export default new Elysia({ name: __filename })
       stack: err.stack,
     });
 
-    if (typeof set.status !== "number") set.status = 500;
-
     set.headers["content-type"] = "application/json";
-    return $c.error(err.message, set.status);
+    return $c.error(err.message);
   });

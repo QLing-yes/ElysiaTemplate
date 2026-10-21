@@ -27,6 +27,6 @@ function registerEvent() {
       conn.release();
     })
     .catch((err) => {
-      logger.error(`[drizzle] connection failed:${err}`);
+      logger.error(`[drizzle] ${err}`);
     });
 }

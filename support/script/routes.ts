@@ -1,4 +1,4 @@
-import { filePathTree, write } from "@/app/utils/file";
+import { filePathTree, writeIfChanged } from "@/app/utils/file";
 
 interface DirInfo {
   idx: number;
@@ -133,9 +133,8 @@ export default function generate(op: Config) {
     suffix.map((k) => `${config.fromDir}/**/*${k}`),
   );
 
-  const file = write(config.target);
-  file.write(`${output.comment}\n${output.import}\n`);
-  fileList.forEach((uri, i) => file.write(`import mod_${i} from "${uri}";\n`));
+  const chunks: string[] = [`${output.comment}\n${output.import}\n`];
+  fileList.forEach((uri, i) => chunks.push(`import mod_${i} from "${uri}";\n`));
 
   const dirKeys = Object.keys(fileTree).sort();
   const dirInfo = buildDirInfo(dirKeys, config.fromDir);
@@ -153,7 +152,7 @@ export default function generate(op: Config) {
         const mods = getMods(fileTree, dir, suffix);
         const childs = childrenOf.get(dir) ?? [];
 
-        file.write(
+        chunks.push(
           generatePlugin(
             info.idx,
             info.name,
@@ -163,10 +162,10 @@ export default function generate(op: Config) {
             output.pluginPrefix,
           ),
         );
-        file.write("\n");
+        chunks.push("\n");
       });
   }
 
-  file.write(`\nexport default ${output.exportDefault};\n`);
-  file.end();
+  chunks.push(`\nexport default ${output.exportDefault};\n`);
+  writeIfChanged(config.target, chunks.join(""));
 }
