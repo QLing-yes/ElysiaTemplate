@@ -1,28 +1,37 @@
-import { aot } from 'elysia/plugin/aot/bun'
+import { join } from "node:path";
+import { aot } from "elysia/plugin/aot/bun";
 
-export const main = import.meta.dir + "/app/cluster.ts";
-export const outdir = import.meta.dir + "/";
+/** 项目根目录（当前脚本位于 support/script，需上溯两级） */
+const root = join(import.meta.dir, "../..");
+/** 应用入口文件绝对路径 */
+export const main = join(root, "app/cluster.ts");
+/** AOT 预编译指向文件绝对路径 */
+const aotEntry = join(root, "app/index.ts");
+/** 构建产物输出目录（项目根目录，已由 .gitignore 忽略 bun-*.*） */
+export const outdir = root;
 
 /**
  * Bun 跨平台单文件可执行文件构建函数
  * 将 TypeScript/JavaScript 项目编译为独立的二进制可执行文件，支持多目标平台
  *
  * @param target - 编译目标平台，格式为 bun-{os}-{arch}，如 "bun-linux-x64"
- * @param outDir - 可选自定义输出目录，不提供则使用默认值 "./"
+ * @param outDir - 可选自定义输出目录，不提供则输出到项目根目录
  * @param fileName - 可选自定义输出文件名，不提供则使用 target 名称
  * @returns Bun 构建结果 Promise
  */
 export async function build(
   target: Bun.Build.CompileTarget,
   outDir: string = outdir,
-  fileName: string = target
+  fileName: string = target,
 ) {
   console.log("\n\x1b[33m🔄 构建中...\x1b[0m\n");
+  // 输出关键路径，便于排查入口解析问题
+  const outfile = join(outDir, fileName);
   // 判断是否为 Windows 平台，用于条件应用 Windows 专属配置
   // const isWindows = target.includes("windows");
   const result = await Bun.build({
     // AOT 预编译：指向真实的 Elysia 实例导出文件
-    plugins: [aot('./app/index.ts')],
+    plugins: [aot(aotEntry)],
     // 入口文件路径：指定应用的启动文件
     entrypoints: [main],
     // 输出模块格式：使用 ES Module 格式
@@ -38,7 +47,7 @@ export async function build(
       // 目标平台：指定跨编译的目标操作系统和架构
       target,
       // 输出文件路径：自定义文件名或使用目标平台名称，Windows 自动添加 .exe
-      outfile: `${outDir}/${fileName}`,
+      outfile,
       // 运行时自动加载 tsconfig.json（默认关闭，显式开启）
       autoloadTsconfig: true,
       // 运行时自动加载 package.json（默认关闭，显式开启）
@@ -92,6 +101,6 @@ export async function build(
       "process.env.NODE_ENV": JSON.stringify("production"),
     },
   });
-  console.log("\n\x1b[32m✅ 构建完成\x1b[0m\n");
+  console.log(`\x1b[32m✅ 构建完成 : ${outfile}\x1b[0m\n`);
   return result;
 }
