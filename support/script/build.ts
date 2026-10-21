@@ -29,7 +29,7 @@ export async function build(
   const outfile = join(outDir, fileName);
   // 判断是否为 Windows 平台，用于条件应用 Windows 专属配置
   // const isWindows = target.includes("windows");
-  const result = await Bun.build({
+  await Bun.build({
     // AOT 预编译：指向真实的 Elysia 实例导出文件
     plugins: [aot(aotEntry)],
     // 入口文件路径：指定应用的启动文件
@@ -102,5 +102,5 @@ export async function build(
     },
   });
   console.log(`\x1b[32m✅ 构建完成 : ${outfile}\x1b[0m\n`);
-  return result;
+  process.exit(0);
 }
