@@ -15,6 +15,10 @@ export function success<T>(data: T, msg = ""): ResType<T> {
 }
 
 /** 错误响应 */
-export function error(msg = "", code = 0): ResType<null> {
-  return { msg, code, data: null };
+export function error<T = null>(
+  msg = "",
+  code = 0,
+  data: T = null as T,
+): ResType<T> {
+  return { msg, code, data };
 }

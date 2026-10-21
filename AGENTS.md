@@ -7,8 +7,3 @@
 语法规范:优先使用let、禁用var;不可变对象用const;函数不使用const声明
 规范:所有入参、返回值、字段、函数，必须通过/***/添加JSDoc注释
 格式:合理换行，代码精简无冗余
-
-# 信息参考优先级
-文档参考：`.agents/skills/elysiajs/SKILL.md`、任意目录下的`SKILL.md`、项目内所有`*.md`文件。
-根据问题关键词使用MCP: `elysia`、`bun`、`deepwiki`、`context7`。
-官方文档：`https://elysiajs.com/llms.txt`、`https://elysiajs.com/llms-full.txt`、`https://github.com/elysiajs/documentation`。

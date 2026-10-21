@@ -1,60 +1,54 @@
 [English](./README-en.md) | [中文](./README.md)
 
-## Pre-release
+## Pre-release Version
 
-- Version `1.0.0` onwards is the official release.
-- `bun create app-elysia@latest` - Try it out
+- Version `1.0.0` marks the official release
+- Clone the project to try it out
 
 ## Project Structure
-- Auto-routing, logging system, ORM, end-to-end type safety, and more features coming soon.
+- Fully automatic routing, logging system, ORM, end-to-end type safety, and more features coming soon
 
 ```
 Project/
 ├── public/                   # Static assets (auto-routed)
 ├── app/
 │   ├── common/
-│   │   └── index.ts          # Global module (registered to "$g", used only in `controller`)
-│   │   └── schemas.ts        # Data schemas (auto-registered via elysia.model)
-│   │   └── schemaDerive.ts   # Derived types and methods for schemas
-│   ├── controller/           # Controller layer (auto-loads files ending with `ctrl.ts`, routes update on change)
+│   │   └── index.ts          # Global module (registered to global "$g", only used in `controller`)
+│   │   └── schemas.ts        # Data models (auto-registered via elysia.model)
+│   │   └── schemaDerive.ts   # Derived types and methods for data models
+│   ├── controller/           # Controller layer (files ending with `ctrl.ts` are auto-loaded, routes update on change)
 │   ├── lib/
-│   │   ├── error.ts          # Global error & process event capture (sync mode)
-│   │   ├── logger.ts         # Logger (async mode by default)
+│   │   ├── error.ts          # Global error and process event capture logging (sync mode)
+│   │   ├── logger.ts         # Logger library (async mode by default)
 │   │   ├── drizzle.ts        # Drizzle client
 │   │   └── redis.ts          # Redis client
-│   ├── model/                # Drizzle schema directory
+│   ├── model/                # Drizzle data model directory
 │   ├── plugins/
 │   │   ├── index.plug.ts     # Global plugin
 │   │   └── macro.plug.ts     # Macro plugin
 │   │   └── controller.plug.ts # Controller plugin
-│   │   └── schemas.plug.ts   # Schema registration plugin
+│   │   └── schemas.plug.ts   # Data model registration plugin
 │   ├── utils/                # Utility functions
-│   └── cluster.ts            # Single-machine multi-process cluster entry
+│   └── cluster.ts            # Single-machine multi-process cluster mode entry
 │   └── index.ts              # Application entry
 ├── logs/
 ├── test/                     # Eden test directory
-├── support/                  # Helper scripts directory (no need to care)
+├── support/                  # Auxiliary scripts directory (no need to care)
 │   └── script/
-│       ├── index.ts          # Generation script
+│       ├── index.ts          # Generation scripts
 │       ├── menu.ts           # Command menu
 │       └── routes.ts         # Route generation tool
 |── .env                      # Configuration file
-|── drizzle.config.ts         # Drizzle configuration
+|── drizzle.config.ts         # drizzle configuration
 ...
 ```
 
-## Create a Project with CLI
+- Of course, you can also just download this repository and use it directly.
 
-```bash
-bun create app-elysia@latest
-```
+### Please configure Drizzle with the following steps
 
-- You can also directly download this repository for use.
-
-### Follow These Steps to Configure Drizzle
-
-1. **Check database configuration** — Verify the database connection info in [.env](.env) is correct
-2. **Confirm schemas** — Check the schema definitions in [app/model](app/model) meet your requirements
+1. **Check database configuration** — Verify the database connection info in [.env](.env)
+2. **Confirm data models** — Check whether the model definitions in [app/model](app/model) meet your needs
 3. **Sync to database** — Run `bun run generate_drigrate_migrate`
 
 ## Quick Start
@@ -67,25 +61,25 @@ bun run dev
 ## Commands
 
 ```bash
-bun run menu    # Launch interactive menu
-bun run dev     # Start dev server with auto route generation
+bun run menu    # Start interactive menu
+bun run dev     # Start dev server, auto-generate routes
 bun run start-hot # Start in production mode with hot reload
-bun run start-hot-bg # Start in production mode with hot reload, persist after terminal close
+bun run start-hot-bg # Start in production mode with hot reload, process survives terminal close
 bun run fix     # Fix code style
 
-bun run generate  # Run all commands prefixed with `generate_`
+bun run generate  # Run all `generate_` prefixed commands
 bun run generate_script  # Generate routes (usually no need to run manually)
 
-bun run drizzle_studio  # Drizzle visual editor
-bun run generate_drigrate_migrate # Generate migrations and run them
+bun run drizzle_studio  # drizzle visualization
+bun run generate_drigrate_migrate # Generate migrations and execute
 
 ```
 - `bun run menu --list` lists all options
-- `bun run menu <parent> <child> <...>` navigate and execute by path level
+- `bun run menu <parent> <child> <...>` supports navigating and executing level by level by path
 
 ## Logging Configuration
 
-- Default: App uses `sync` mode for recording ([app/lib/error.ts](app/lib/error.ts)), controllers use `async` mode ([app/plugins/controller.plug.ts](app/plugins/controller.plug.ts)).
+- Default: [the application uses `sync` mode](app/lib/error.ts), [controllers use `async` mode](app/plugins/controller.plug.ts).
 
 ```typescript
 import { Logger, logger } from "@/app/lib/logger";
@@ -112,84 +106,22 @@ export interface LoggerOptions {
   dir?: string;
   /** File rotation granularity, default `day` */
   rotateBy?: RotateBy;
-  /** Whether to also output to stdout, default `true` */
+  /** Whether to also output to stdout, default `process.env.LOG_STDOUT` */
   stdout?: boolean;
   /** Minimum log level, default `debug` */
   level?: LogLevel;
-  /** Scheduled flush interval (ms), default `1000` */
+  /** Timed flush interval (ms), default `1000` */
   flushInterval?: number;
   /**
-   * Memory buffer high watermark (bytes), sync flush to disk when reached, default `1MB`
-   * Applicable to async mode; sync mode flushes on each write, this option is ignored
+   * In-memory buffer high water mark (bytes), flushed to disk synchronously when reached, default `1MB`
+   * Applies to async mode; in sync mode every write goes straight to disk, so this option has no effect
    */
   highWaterMark?: number;
-  /** Maximum number of archived files to keep, 0 means no limit, default `0` */
+  /** Maximum number of archived files to keep, 0 means unlimited, default `0` */
   maxFiles?: number;
   /** Sync write mode, default `false` */
   sync?: boolean;
-  /** Indentation spaces for formatting metadata, default `1` */
+  /** Number of spaces used to indent formatted metadata, default `1` */
   formatted?: number;
-}
-```
-
-## AI Skills / For LLMs
-
-```bash
-bunx skills add elysiajs/skills
-```
-
-- [llms](https://elysiajs.com/llms.txt)
-- [llms-full](https://elysiajs.com/llms-full.txt)
-
-## MCP Recommendations
-
-```json
-{
-  "mcpServers": {
-    // Turn any GitHub project into a documentation hub
-    "name": {
-      "url": "https://gitmcp.io/{author}/{repo}"
-    },
-    // Elysia documentation
-    "elysia": {
-      "url": "https://gitmcp.io/elysiajs/documentation"
-    },
-    // Bun documentation
-    "bun": {
-      "url": "https://bun.com/docs/mcp"
-    },
-    // Codebase context understanding service
-    "context7": {
-      "command": "npx",
-      "args": [
-        "-y",
-        "@upstash/context7-mcp",
-        "--api-key",
-        "your-key"
-      ]
-    },
-    // Codebase deep understanding service
-    "deepwiki": {
-      "command": "npx",
-      "args": [
-        "-y",
-        "mcp-deepwiki@latest"
-      ]
-    },
-    // Chrome DevTools integration
-    "chrome-devtools": {
-      "command": "npx",
-      "args": [
-        "chrome-devtools-mcp@latest"
-      ]
-    },
-    // Playwright browser automation
-    "playwright": {
-      "command": "npx",
-      "args": [
-        "@playwright/mcp@latest"
-      ]
-    }
-  }
 }
 ```

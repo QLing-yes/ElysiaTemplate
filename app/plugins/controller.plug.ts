@@ -10,14 +10,13 @@ export default new Elysia({ name: __filename })
   .use(plug_macro)
   .beforeHandle(({ request, body }) => {
     logger.info(
-      `[request] ${request.method} ${request.url}`,
+      `[request] ${request.method} ${new URL(request.url).pathname}`,
       body !== undefined ? { body } : body,
     );
   })
   // .afterResponse(({ set, request }) => {
-  // 	logger.info(`[response] ${request.method} ${request.url} ${set.status}`);
+  // 	logger.info(`[response] ${request.method} ${new URL(request.url).pathname} ${set.status}`);
   // })
-  // global 作用域：连未匹配路由的 NotFound 也统一走本处理器（v2 默认 plugin 作用域不含 404）
   .error("global", ({ error: errObj, request, set }) => {
     const err = errObj instanceof Error ? errObj : new Error(String(errObj));
     const errCode = errObj instanceof ElysiaError ? errObj.code : err.name;

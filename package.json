@@ -1,6 +1,6 @@
 {
   "name": "my-elysia-app",
-  "version": "0.0.45",
+  "version": "0.9.9",
   "type": "module",
   "scripts": {
     "menu": "bun ./support/script/menu.ts",

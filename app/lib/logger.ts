@@ -33,7 +33,7 @@ export interface LoggerOptions {
   dir?: string;
   /** 文件轮转粒度，默认 `day` */
   rotateBy?: RotateBy;
-  /** 是否同时输出到 stdout，默认 `true` */
+  /** 是否同时输出到终端，默认 `process.env.LOG_STDOUT` */
   stdout?: boolean;
   /** 最低记录级别，默认 `debug` */
   level?: LogLevel;
@@ -53,6 +53,8 @@ export interface LoggerOptions {
 }
 
 // ─── 常量 ────────────────────────────────────────────────────────────────────
+
+const env = process.env;
 
 /** 级别权重映射，用于过滤低级别日志 */
 const LEVEL_RANK: Record<LogLevel, number> = {
@@ -276,7 +278,7 @@ export class Logger {
   constructor(options: LoggerOptions = {}) {
     this.dir = options.dir ?? "logs";
     this.rotateBy = options.rotateBy ?? "day";
-    this.toStdout = options.stdout ?? true;
+    this.toStdout = options.stdout ?? JSON.parse(env.LOG_STDOUT ?? "false");
     this.minLevel = LEVEL_RANK[options.level ?? "debug"];
     this.highWaterMark = options.highWaterMark ?? 1024 * 1024;
     this.maxFiles = options.maxFiles ?? 0;

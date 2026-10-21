@@ -1,14 +1,12 @@
 [English](./README-en.md) | [中文](./README.md)
 
-## 项目暂停中
-
 ## 预发布版本
 
-- `1.0.0` 版本起即为正式版。
-- `bun create app-elysia@latest` - 尝鲜体验
+- `1.0.0` 版本起即为正式版
+- 克隆项目尝鲜体验
 
 ## 项目结构
-- 全自动路由、日志系统、ORM、端到端类型安全，更多功能即将推出。
+- 全自动路由、日志系统、ORM、端到端类型安全，更多功能即将推出
 
 ```
 Project/
@@ -43,12 +41,6 @@ Project/
 |── .env                      # 配置文件
 |── drizzle.config.ts         # drizzle 配置
 ...
-```
-
-## 使用 CLI 创建项目
-
-```bash
-bun create app-elysia@latest
 ```
 
 - 当然，你也可以直接下载本仓库使用。
@@ -114,7 +106,7 @@ export interface LoggerOptions {
   dir?: string;
   /** 文件轮转粒度，默认 `day` */
   rotateBy?: RotateBy;
-  /** 是否同时输出到 stdout，默认 `true` */
+  /** 是否同时输出到 stdout，默认 `process.env.LOG_STDOUT` */
   stdout?: boolean;
   /** 最低记录级别，默认 `debug` */
   level?: LogLevel;
@@ -133,66 +125,3 @@ export interface LoggerOptions {
   formatted?: number;
 }
 ```
-
-## AI技能 / 针对LLMS
-
-```bash
-bunx skills add elysiajs/skills
-```
-
-- [llms](https://elysiajs.com/llms.txt)
-- [llms-full](https://elysiajs.com/llms-full.txt)
-
-## MCP推荐
-
-```json
-{
-  "mcpServers": {
-    // 任何GitHub项目转变为文档中心
-    "名称": {
-      "url": "https://gitmcp.io/{作者}/{仓库}"
-    },
-    // elysia 文档
-    "elysia": {
-      "url": "https://gitmcp.io/elysiajs/documentation"
-    },
-    // Bun 文档
-    "bun": {
-      "url": "https://bun.com/docs/mcp",
-    },
-    // 代码库上下文理解服务
-    "context7": {
-      "command": "npx",
-      "args": [
-        "-y",
-        "@upstash/context7-mcp",
-        "--api-key",
-        "你的密钥"
-      ]
-    },
-    // 代码库深度理解服务
-    "deepwiki": {
-      "command": "npx",
-      "args": [
-        "-y",
-        "mcp-deepwiki@latest"
-      ]
-    },
-    // Chrome 开发者工具集成
-    "chrome-devtools": {
-      "command": "npx",
-      "args": [
-        "chrome-devtools-mcp@latest"
-      ]
-    },
-    // Playwright 浏览器自动化
-    "playwright": {
-      "command": "npx",
-      "args": [
-        "@playwright/mcp@latest"
-      ]
-    }
-  }
-}
-```
-
