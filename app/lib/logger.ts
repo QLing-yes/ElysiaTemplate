@@ -434,8 +434,14 @@ export class Logger {
    * @returns 规范化后的元数据
    */
   private sanitizeMeta(meta?: Meta) {
-    if (meta instanceof Error)
-      return { name: meta.name, msg: meta.message, stack: meta.stack };
+    if (meta instanceof Error) {
+      return {
+        name: meta.name,
+        msg: meta.message,
+        stack: meta.stack,
+        cause: meta.cause,
+      };
+    }
     return meta;
   }
 
