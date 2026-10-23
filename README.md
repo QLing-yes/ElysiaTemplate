@@ -33,7 +33,7 @@ Project/
 │   └── index.ts              # 应用入口
 ├── logs/
 ├── test/                     # Eden 测试目录
-├── support/                  # 辅助脚本目录（无需关心）
+├── system/                  # 辅助脚本目录（无需关心）
 │   └── script/
 │       ├── index.ts          # 生成脚本
 │       ├── menu.ts           # 命令菜单

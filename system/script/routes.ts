@@ -3,6 +3,7 @@ import { filePathTree, writeIfChanged } from "@/app/utils/file";
 interface DirInfo {
   idx: number;
   name: string;
+  relPath: string;
   fullPath: string;
 }
 
@@ -13,11 +14,15 @@ interface Config {
   target: string;
   /** 文件后缀匹配顺序 */
   suffix?: string[];
-  /** 输出格式 */
+  /** 生成文件的输出格式 */
   output?: {
+    /** 顶部注释 */
     comment?: string;
+    /** 顶部导入语句 */
     import?: string;
+    /** 插件变量名前缀 */
     pluginPrefix?: string;
+    /** 导出的默认插件 */
     exportDefault?: string;
   };
 }
@@ -25,24 +30,22 @@ interface Config {
 /** 生成插件代码 */
 function generatePlugin(
   idx: number,
-  name: string,
-  fullPath: string,
+  route_tag: string,
+  route_prefix: string,
+  val_prefix: string,
   mods: number[],
   childs: number[],
-  prefix: string,
 ): string {
-  const str_prefix = `prefix: "${name}"`;
-  const str_name = `name: "${fullPath}" + __filename`;
-  const str_tags = `tags:["${fullPath}"]`;
+  const str_prefix = `prefix: "${route_prefix}"`;
+  const str_tags = `tags:["/${route_tag}"]`;
   const str_detail = `detail: { ${str_tags} }`;
+  const str_name = `name: num()`;
 
-  const opts = name
-    ? `{ ${str_prefix}, ${str_detail}, ${str_name} }`
-    : `{ ${str_name} }`;
+  const opts = `{ ${str_prefix}, ${str_detail}, ${str_name} }`;
 
-  let code = `\nconst ${prefix}${idx} = () => new Elysia(${opts})`;
+  let code = `\nconst ${val_prefix}${idx} = () => new Elysia(${opts})`;
   mods.forEach((i) => (code += `\n\t.use(mod_${i})`));
-  childs.forEach((id) => (code += `\n\t.use(${prefix}${id}())`));
+  childs.forEach((id) => (code += `\n\t.use(${val_prefix}${id}())`));
   return code;
 }
 
@@ -66,7 +69,8 @@ function buildDirInfo(dirKeys: string[], base: string): Map<string, DirInfo> {
     map.set(dir, {
       idx: i,
       name: rel ? (parts.at(-1) ?? "") : "",
-      fullPath: rel || "/",
+      relPath: rel,
+      fullPath: dir,
     });
   });
   return map;
@@ -113,7 +117,7 @@ const DEFAULT_CONFIG = {
   suffix: ["ctrl.ts"],
   output: {
     comment: "//auto generated",
-    import: 'import Elysia from "elysia";',
+    import: 'import Elysia from "elysia";\nimport * as $g from "@/app/common";',
     pluginPrefix: "plug_",
     exportDefault: "plug_0()",
   },
@@ -136,6 +140,8 @@ export default function generate(op: Config) {
   const chunks: string[] = [`${output.comment}\n${output.import}\n`];
   fileList.forEach((uri, i) => chunks.push(`import mod_${i} from "${uri}";\n`));
 
+  chunks.push("\nconst num = () => String($g.counter.n);\n")
+
   const dirKeys = Object.keys(fileTree).sort();
   const dirInfo = buildDirInfo(dirKeys, config.fromDir);
   const childrenOf = buildChildren(dirKeys, dirInfo, config.fromDir);
@@ -155,11 +161,11 @@ export default function generate(op: Config) {
         chunks.push(
           generatePlugin(
             info.idx,
-            info.name,
             info.fullPath,
+            info.name,
+            output.pluginPrefix,
             mods,
             childs,
-            output.pluginPrefix,
           ),
         );
         chunks.push("\n");

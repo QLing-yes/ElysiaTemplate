@@ -1,27 +1,132 @@
 {
-  "npm.packageManager": "bun",
-  "npm.scriptRunner": "bun",
-  "editor.guides.bracketPairs": "active",
-  "typescript.suggest.paths": true,
-  "javascript.suggest.paths": true,
-  "explorer.sortOrder": "type",
-  "explorer.fileNesting.enabled": true,
-  "explorer.fileNesting.expand": true,
-  "explorer.fileNesting.patterns": {
-    ".gitignore": ".gitattributes, .gitmodules, .gitmessage, .mailmap, .git-blame*",
-    "*.css": "$(capture).*.map",
-    "*.scss": "$(capture).*",
-    "*.js": "$(capture).js.map, $(capture).d.ts.map, $(capture).min.js, $(capture).d.ts",
-    "*.jsx": "$(capture).js",
-    "*.ts": "$(capture).js, $(capture).*.ts",
-    "*.tsx": "$(capture).ts",
-    "*.vue": "$(capture).*.ts, $(capture).*.js",
-    "index.d.ts": "*.d.ts",
-    "shims.d.ts": "*.d.ts",
-    ".env": "*.env, .env.*, env.d.ts",
-    "dockerfile": ".dockerignore, dockerfile*",
-    "package.json": "tsconfig.json,bunfig.toml,*.config.ts,.npmrc,*.lock,*lock.json,.gitignore,LICENSE,biome.json*,.biomeignore",
-    "README.md": "*.md",
-    "*.exe": "$(capture).map",
-  }
+	// ========== 体验优化 ==========
+	// 括号对参考线
+	"editor.guides.bracketPairs": "active",
+	// 内联（镶嵌）提示总开关
+	"editor.inlayHints.enabled": "on",
+	// TS 文件：函数调用处显示全部形参名（all=全部 / literals=仅字面量实参 / none=关闭）
+	"typescript.inlayHints.parameterNames.enabled": "all",
+	// JS 文件：函数调用处显示全部形参名
+	"javascript.inlayHints.parameterNames.enabled": "all",
+	// 实参名与形参名相同时不重复提示（减少视觉噪音，可删除）
+	"typescript.inlayHints.parameterNames.suppressWhenArgumentMatchesName": true,
+	// 移动/重命名 TS 文件时自动更新所有引用处的 import 路径
+	"typescript.updateImportsOnFileMove.enabled": "always",
+	// 滚动时长文件顶部冻结当前函数/类名（Sticky Scroll，长文件定位神器）
+	"editor.stickyScroll.enabled": true,
+	// 括号成对着色（你已有 bracketPairs 参考线，再加颜色更清晰）
+	"editor.bracketPairColorization.enabled": true,
+	// 光标平滑移动
+	"editor.cursorSmoothCaretAnimation": "on",
+	// 保存文件统一：末尾加空行 + 去掉行尾多余空格
+	"files.insertFinalNewline": true,
+	"files.trimTrailingWhitespace": true,
+	// 单个子文件夹将被压缩在组合的树元素中
+	"explorer.compactFolders": true,
+	// 小地图
+	"editor.minimap.enabled": true,
+	// 补全函数调用时自动带括号和参数名（如 fn(⏎arg)）
+	"typescript.suggest.completeFunctionCalls": true,
+	// 自动补全 import（默认开，显式写出来更明确）
+	"typescript.suggest.autoImports": true,
+	// 成对标签同步修改（改 <div 开头自动改 </div> 闭合）
+	"editor.linkedEditing": true,
+	// 字体连字（如 ->、== 合并成特殊字符显示）
+	"editor.fontLigatures": true,
+	// ========== Git ==========
+	// 自动后台拉取远端更新
+	"git.autofetch": true,
+	// Ctrl+Enter 智能提交（自动暂存全部改动，不用手动 stage）
+	"git.enableSmartCommit": true,
+	// ========== 性能（node_modules 大项目明显减卡顿）==========
+	// 文件监听排除，减少后台扫描
+	"files.watcherExclude": {
+		"**/.git/objects/**": true,
+		"**/node_modules/**": true
+	},
+	// 全局搜索排除 node_modules 和构建产物
+	"search.exclude": {
+		"**/node_modules": true,
+		"**/dist": true
+	},
+	// ========== 文件树 ==========
+	"explorer.fileNesting.enabled": true,
+	"explorer.fileNesting.expand": true,
+	"explorer.fileNesting.patterns": {
+		".gitignore": ".gitattributes, .gitmodules, .gitmessage, .mailmap, .git-blame*",
+		"*.css": "$(capture).*.map",
+		"*.scss": "$(capture).*",
+		"*.js": "$(capture).js.map, $(capture).d.ts.map, $(capture).min.js, $(capture).d.ts",
+		"*.jsx": "$(capture).js",
+		"*.ts": "$(capture).js, $(capture).*.ts",
+		"*.tsx": "$(capture).ts",
+		"*.vue": "$(capture).*.ts, $(capture).*.js",
+		"index.d.ts": "*.d.ts",
+		"shims.d.ts": "*.d.ts",
+		".env": "*.env, .env.*, env.d.ts",
+		"dockerfile": ".dockerignore, dockerfile*",
+		"package.json": "tsconfig.json,bunfig.toml,*.config.ts,.npmrc,*.lock,*lock.json,.gitignore,LICENSE,biome.json*,.biomeignore",
+		"README.md": "*.md",
+		"*.exe": "$(capture).map",
+	},
+	// ========== AI ==========
+	// 让 AI 读取项目里的 CLAUDE.md，作为对话上下文/规则依据
+	"AI.rules.importClaudeMd": true,
+	// 允许工作区中的 MCP 服务配置（.mcp.json）生效
+	"trae.mcp.enableWorkspaceMcp": true,
+	// ========== 字体清晰度优化 ==========
+	// Windows 字体平滑：antialiased=灰度抗锯齿（中文边缘更干净）；想更锐利可改 "default"（ClearType）
+	"workbench.fontAliasing": "antialiased",
+	// 平滑滚动 + Ctrl+滚轮缩放字号，长文档更舒适
+	"editor.smoothScrolling": true,
+	"editor.mouseWheelZoom": true,
+	// 光标宽度（px）
+	"editor.cursorWidth": 3,
+	// 编辑器字号（px）
+	"editor.fontSize": 15,
+	// 字体族：Cascadia Code（已装，西文清晰）+ Consolas 兜底 + 中文回退（已装：微软雅黑 UI / 思源黑体）
+	"editor.fontFamily": "'Cascadia Code', Consolas, 'Microsoft YaHei UI', 'Noto Sans SC', monospace",
+	// 字重：450 会触发 Windows 合成假粗体导致发虚，改回 400 原生渲染最清晰
+	"editor.fontWeight": "400",
+	// 行高：字号 15 时 24px ≈ 1.6 倍，中文阅读更舒展
+	"editor.lineHeight": 24,
+	// 字间距（px）：轻微加宽，减少笔画粘连
+	"editor.letterSpacing": -0.8,
+	// ========== 注释显示优化 ==========
+	"editor.tokenColorCustomizations": {
+		"textMateRules": [
+			{
+				"scope": [
+					"comment",
+					"comment.line",
+					"comment.block",
+					"comment.line.double-slash",
+					"comment.block.documentation"
+				],
+				"settings": {
+					"fontStyle": "italic",
+					"foreground": "#6a737d5b"
+				}
+			}
+		]
+	},
+	"editor.comments.insertSpace": true,
+	"editor.comments.ignoreEmptyLines": true,
+	// ----------- 其他 --------------------------------------------
+	"workbench.colorTheme": "Deep Blue",
+	"[typescript]": {
+		"editor.defaultFormatter": "biomejs.biome"
+	},
+	"[vue]": {
+		"editor.defaultFormatter": "Vue.volar"
+	},
+	"npm.packageManager": "bun",
+	"npm.scriptRunner": "bun",
+	"trae.floatingChat.enabled": false,
+	"[jsonc]": {
+		"editor.defaultFormatter": "vscode.json-language-features"
+	},
+	"trae.network.proxy.effectiveMode": "system",
+	"workbench.iconTheme": "vscode-icons",
+	"window.autoDetectColorScheme": false
 }

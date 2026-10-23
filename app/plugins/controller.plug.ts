@@ -5,7 +5,7 @@ import plug_macro from "./macro.plug";
 import plug_schemas from "./schemas.plug";
 
 /** 控制器插件 */
-export default new Elysia({ name: __filename })
+export default new Elysia({ name: String($g.counter.n) })
   .use(plug_schemas)
   .use(plug_macro)
   .beforeHandle(({ request, body }) => {
@@ -23,7 +23,8 @@ export default new Elysia({ name: __filename })
 
     if (errObj instanceof ValidationError) {
       const on = errObj.type ?? "unknown";
-      const path = "property" in errObj.payload ? errObj.payload.property : "root";
+      const path =
+        "property" in errObj.payload ? errObj.payload.property : "root";
       /** 将 JSON Pointer 转为点路径：/data/a/b -> data.a.b */
       const property = path.replace(/^\//, "").replace(/\//g, ".");
       err.message = `[${on}] ${property} : ${err.message}`;

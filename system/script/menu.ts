@@ -258,7 +258,7 @@ const menuItems: MenuItem[] = [
       {
         name: "script",
         remark: "生成路由",
-        fun: () => execCmd("bun ./support/script/index.ts"),
+        fun: () => execCmd("bun ./system/script/index.ts"),
       },
     ],
   },

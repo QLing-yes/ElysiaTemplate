@@ -1,7 +1,7 @@
 import { join } from "node:path";
 import { aot } from "elysia/plugin/aot/bun";
 
-/** 项目根目录（当前脚本位于 support/script，需上溯两级） */
+/** 项目根目录（当前脚本位于 system/script，需上溯两级） */
 const root = join(import.meta.dir, "../..");
 /** 应用入口文件绝对路径 */
 export const main = join(root, "app/cluster.ts");

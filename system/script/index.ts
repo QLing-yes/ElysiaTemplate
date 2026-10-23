@@ -5,12 +5,12 @@ import autoRoutes from "./routes";
 const args = process.argv.slice(2);
 const routes_config = {
   fromDir: "app/controller",
-  target: "./support/generated/routes.ts",
+  target: "./system/generated/routes.ts",
 };
 const batch_export_config = {
   root: "app/model",// 文件只能在配置的root目录下，否则会导致重复名称
   suffix: [".mold.ts"],
-  out: "./support/generated/schema.ts",
+  out: "./system/generated/schema.ts",
   template: `export { schema as {{name}}_schema } from "{{path}}";`,
 };
 
