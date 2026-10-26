@@ -578,9 +578,9 @@ export class Logger {
     time: string,
     metaJson: string | null,
   ): string {
-    const label = level.toUpperCase().padEnd(5);
+    const label = `[${level.toUpperCase()}]`.padEnd(7);
     const metaStr = metaJson ? `\n${metaJson}` : "";
-    return `${time} [${label}] ${msg}${metaStr}\n`;
+    return `${time} ${label} ${msg}${metaStr}\n`;
   }
 
   /**
@@ -597,11 +597,11 @@ export class Logger {
     time: string,
   ): void {
     const color = LEVEL_COLOR[level];
-    const label = level.toUpperCase().padEnd(5);
+    const label = `[${level.toUpperCase()}]`.padEnd(7);
     const metaStr = metaJson ? `\n${metaJson}` : "";
 
     process.stdout.write(
-      `${color}${time} [${label}]${RESET} ${msg}${metaStr}\n`,
+      `${color}${time} ${label}${RESET} ${msg}${metaStr}\n`,
     );
   }
 }

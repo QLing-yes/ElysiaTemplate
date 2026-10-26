@@ -11,6 +11,8 @@ export const app = new Elysia({
     strictPath: true,
     // 开启 Schema 严格规范化（精确映射机制），清理多余字段，保证数据结构干净
     normalize: true,
+    // 允许生产环境暴露完整的验证错误详情（含失败字段路径），便于排查响应结构问题
+    // allowUnsafeValidationDetails: true,
     serve: {
         // 跨进程端口复用(仅 Linux 生效)，允许多个进程监听同一端口实现负载均衡
         reusePort: true,

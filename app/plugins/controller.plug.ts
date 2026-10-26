@@ -17,17 +17,13 @@ export default new Elysia({ name: String($g.counter.n) })
   // .afterResponse(({ set, request }) => {
   // 	logger.info(`[response] ${request.method} ${new URL(request.url).pathname} ${set.status}`);
   // })
-  .error("global", ({ error: errObj, request, set }) => {
-    const err = errObj instanceof Error ? errObj : new Error(String(errObj));
-    const errCode = errObj instanceof ElysiaError ? errObj.code : err.name;
+  .error("global", ({ error, request, set }) => {
+    const err = error instanceof Error ? error : new Error(String(error));
+    const errCode = error instanceof ElysiaError ? error.code : err.name;
 
-    if (errObj instanceof ValidationError) {
-      const on = errObj.type ?? "unknown";
-      const path =
-        "property" in errObj.payload ? errObj.payload.property : "root";
-      /** 将 JSON Pointer 转为点路径：/data/a/b -> data.a.b */
-      const property = path.replace(/^\//, "").replace(/\//g, ".");
-      err.message = `[${on}] ${property} : ${err.message}`;
+    if (error instanceof ValidationError) {
+      const property = error.all[0].path.replace(/^\//, "");
+      err.message = `[${error.type}] ${property} : ${err.message}`;
     }
 
     logger.error(`${request.method} ${new URL(request.url).pathname}`, {
