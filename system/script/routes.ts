@@ -161,7 +161,7 @@ export default function generate(op: Config) {
         chunks.push(
           generatePlugin(
             info.idx,
-            info.fullPath,
+            info.relPath,
             info.name,
             output.pluginPrefix,
             mods,

@@ -5,6 +5,7 @@ import { controller } from "@/app/plugins/index.plug";
 
 export default $g.ctrl((app) =>
   app
+    // 全部路由
     .post(
       "routers",
       {
@@ -17,6 +18,7 @@ export default $g.ctrl((app) =>
         return $g.success(list);
       },
     )
+    // 测试动态响应类型
     .post(
       "test",
       {
@@ -28,23 +30,18 @@ export default $g.ctrl((app) =>
         if (body.a > 2) {
           return $g.error("no > 2");
         }
-        return $g.success(body.a + 1);
+        return $g.success(`${body.a + 1}test`);
       },
     )
-    .post(
-      "success",
-      { res: t.String() },
-      () => {
-        return $g.success("succData");
-      },
-    )
-    .post(
-      "err",
-      { res: t.String() },
-      () => {
-        return $g.error("errData", 0);
-      },
-    )
+    // 测试成功响应
+    .post("success", { res: t.String() }, () => {
+      return $g.success("succData");
+    })
+    // 测试错误响应
+    .post("err", { res: t.String() }, () => {
+      return $g.error("errData", 0);
+    })
+    // 测试响应类型错误
     .post(
       "err2",
       {
@@ -54,21 +51,22 @@ export default $g.ctrl((app) =>
         return $g.success({ a: { b: 1 } });
       },
     )
+    // 抛出错误
     .post("throwErr", () => {
       throw new Error("throwErr");
     })
+    // 直接抛出数据
     .post("throwData", () => {
       throw "throwData";
     })
-    .get(
-      "/redis",
-      { res: t.String() },
-      async () => {
-        await $g.redis.set("test", "hello world");
-        const result = await $g.redis.get("test");
-        return $g.success(result);
-      },
-    )
+
+    // ===== 测试 Redis =====
+
+    .get("/redis", { res: t.String() }, async () => {
+      await $g.redis.set("test", "hello world");
+      const result = await $g.redis.get("test");
+      return $g.success(result);
+    })
 
     // ===== 增删改查 测试 =====
 
@@ -89,29 +87,21 @@ export default $g.ctrl((app) =>
     )
 
     /** 查询所有用户 */
-    .get(
-      "user/list",
-      { res: t.Any() },
-      async () => {
-        const rows = await $g.db.query.user.findMany();
-        return $g.success(rows);
-      },
-    )
+    .get("user/list", { res: t.Any() }, async () => {
+      const rows = await $g.db.query.user.findMany();
+      return $g.success(rows);
+    })
 
     /** 按ID查询用户 */
-    .get(
-      "user/detail/:id",
-      { res: t.Any() },
-      async ({ params }) => {
-        const row = await $g.db.query.user.findFirst({
-          where: { id: +params.id },
-        });
-        if (!row) {
-          return $g.error("用户不存在", 404);
-        }
-        return $g.success(row);
-      },
-    )
+    .get("user/detail/:id", { res: t.Any() }, async ({ params }) => {
+      const row = await $g.db.query.user.findFirst({
+        where: { id: +params.id },
+      });
+      if (!row) {
+        return $g.error("用户不存在", 404);
+      }
+      return $g.success(row);
+    })
 
     /** 更新用户 */
     .put(
@@ -136,19 +126,15 @@ export default $g.ctrl((app) =>
     )
 
     /** 删除用户 */
-    .delete(
-      "user/delete/:id",
-      { res: t.Any() },
-      async ({ params }) => {
-        const [{ affectedRows }] = await $g.db
-          .delete(user)
-          .where(eq(user.id, +params.id));
-        if (affectedRows === 0) {
-          return $g.error("用户不存在", 404);
-        }
-        return $g.success(null, "删除成功");
-      },
-    )
+    .delete("user/delete/:id", { res: t.Any() }, async ({ params }) => {
+      const [{ affectedRows }] = await $g.db
+        .delete(user)
+        .where(eq(user.id, +params.id));
+      if (affectedRows === 0) {
+        return $g.error("用户不存在", 404);
+      }
+      return $g.success(null, "删除成功");
+    })
 
     /** 新增文章 */
     .post(
@@ -169,14 +155,10 @@ export default $g.ctrl((app) =>
     )
 
     /** 查询所有文章（含作者信息） */
-    .get(
-      "post/list",
-      { res: t.Any() },
-      async () => {
-        const rows = await $g.db.query.post.findMany({
-          with: { author: true },
-        });
-        return $g.success(rows);
-      },
-    ),
+    .get("post/list", { res: t.Any() }, async () => {
+      const rows = await $g.db.query.post.findMany({
+        with: { author: true },
+      });
+      return $g.success(rows);
+    }),
 );

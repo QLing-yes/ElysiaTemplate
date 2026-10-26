@@ -1,1 +1,1 @@
-export default (app: Ctrl) => app.get("/test", () => $g.success("test"));
+export default (app: Ctrl) => app.get("/test", () => "test");
