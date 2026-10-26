@@ -9,6 +9,9 @@ export const controller = plug_controller.use(routes);
 const assets = await staticPlugin({ alwaysStatic: false });
 
 export default new Elysia({ name: String($g.counter.n) })
+  .derive(() => {
+    return { rid: crypto.randomUUID() };
+  })
   .use(cors())
   .use(openapi())
   .use(assets)
