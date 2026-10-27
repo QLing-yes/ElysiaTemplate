@@ -1,8 +1,8 @@
 import { Elysia, ElysiaError, ValidationError } from "elysia";
 import * as $c from "@/app/common";
 import { logger } from "@/app/lib/logger";
-import plug_macro from "./macro.plug";
-import plug_schemas from "./schemas.plug";
+import plug_macro from "@/app/plugins/macro.plug";
+import plug_schemas from "@/app/plugins/schemas.plug";
 
 /** 控制器插件 */
 export default new Elysia({ name: String($g.counter.n) })

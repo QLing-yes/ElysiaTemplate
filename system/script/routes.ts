@@ -116,7 +116,7 @@ function buildChildren(
 const DEFAULT_CONFIG = {
   suffix: ["ctrl.ts"],
   output: {
-    comment: "//auto generated",
+    comment: "// auto generated",
     import: 'import Elysia from "elysia";\nimport * as $g from "@/app/common";',
     pluginPrefix: "plug_",
     exportDefault: "plug_0()",
