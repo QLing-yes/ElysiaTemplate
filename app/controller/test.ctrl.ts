@@ -10,7 +10,7 @@ export default $g.ctrl((app) =>
     .post(
       "routers",
       {
-        res: t.Array(t.Any()),
+        response: $g.res(t.Array(t.String())),
       },
       () => {
         const list: string[] = controller.routes.map(
@@ -27,28 +27,29 @@ export default $g.ctrl((app) =>
 
         // res: t.Number(),// Type validation has no effect, run-time normal validation
         // Equality ↑↓
-        // response: Schema.ResSchemaFun(t.Number()),// normal
+        // response: Schema.ResSchemaFun(t.Number()),// normal validation
+        // response: $g.res(t.Number()),
       },
       ({ body }) => {
         if (body.a > 2) {
           return $g.error("no > 2");
         }
-        return $g.success(`${body.a + 1}test`); // Test type error
+        return $g.success(1); // Test type error
       },
     )
     // 测试成功响应
-    .post("success", { res: t.String() }, () => {
+    .post("success", { response: $g.res(t.String()) }, () => {
       return $g.success("succData");
     })
     // 测试错误响应
-    .post("err", { res: t.String() }, () => {
+    .post("err", { response: $g.res(t.String()) }, () => {
       return $g.error("errData", 0);
     })
     // 测试响应类型错误
     .post(
       "err2",
       {
-        res: t.Object({ a: t.Object({ b: t.String() }) }),
+        response: $g.res(t.Object({ a: t.Object({ b: t.String() }) })),
       },
       () => {
         return $g.success({ a: { b: 1 } });
@@ -65,7 +66,7 @@ export default $g.ctrl((app) =>
 
     // ===== 测试 Redis =====
 
-    .get("/redis", { res: t.String() }, async () => {
+    .get("/redis", { response: $g.res(t.String()) }, async () => {
       await $g.redis.set("test", "hello world");
       const result = await $g.redis.get("test");
       return $g.success(result);
@@ -81,7 +82,7 @@ export default $g.ctrl((app) =>
           email: t.String({ format: "email" }),
           name: t.Optional(t.String()),
         }),
-        res: t.Any(),
+        response: $g.res(t.Any()),
       },
       async ({ body }) => {
         const row = await $g.db.insert(user).values(body).$returningId();
@@ -90,13 +91,13 @@ export default $g.ctrl((app) =>
     )
 
     /** 查询所有用户 */
-    .get("user/list", { res: t.Any() }, async () => {
+    .get("user/list", { response: $g.res(t.Any()) }, async () => {
       const rows = await $g.db.query.user.findMany();
       return $g.success(rows);
     })
 
     /** 按ID查询用户 */
-    .get("user/detail/:id", { res: t.Any() }, async ({ params }) => {
+    .get("user/detail/:id", { response: $g.res(t.Any()) }, async ({ params }) => {
       const row = await $g.db.query.user.findFirst({
         where: { id: +params.id },
       });
@@ -114,7 +115,7 @@ export default $g.ctrl((app) =>
           email: t.Optional(t.String({ format: "email" })),
           name: t.Optional(t.String()),
         }),
-        res: t.Any(),
+        response: $g.res(t.Any()),
       },
       async ({ params, body }) => {
         const [{ affectedRows }] = await $g.db
@@ -129,7 +130,7 @@ export default $g.ctrl((app) =>
     )
 
     /** 删除用户 */
-    .delete("user/delete/:id", { res: t.Any() }, async ({ params }) => {
+    .delete("user/delete/:id", { response: $g.res(t.Any()) }, async ({ params }) => {
       const [{ affectedRows }] = await $g.db
         .delete(user)
         .where(eq(user.id, +params.id));
@@ -149,7 +150,7 @@ export default $g.ctrl((app) =>
           published: t.Optional(t.Boolean()),
           authorId: t.Number(),
         }),
-        res: t.Any(),
+        response: $g.res(t.Any()),
       },
       async ({ body }) => {
         const row = await $g.db.insert(post).values(body).$returningId();
@@ -158,7 +159,7 @@ export default $g.ctrl((app) =>
     )
 
     /** 查询所有文章（含作者信息） */
-    .get("post/list", { res: t.Any() }, async () => {
+    .get("post/list", { response: $g.res(t.Any()) }, async () => {
       const rows = await $g.db.query.post.findMany({
         with: { author: true },
       });

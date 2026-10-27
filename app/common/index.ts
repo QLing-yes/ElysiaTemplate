@@ -1,7 +1,7 @@
 export { drizzle as db } from "@/app/lib/drizzle";
 export { logger } from "@/app/lib/logger";
 export { redis } from "@/app/lib/redis";
-export { ResSchemaFun } from "./schemaDerive";
+export { ResSchemaFun as res } from "./schemaDerive";
 
 import type controller from "@/app/plugins/controller.plug";
 import type { ResType } from "./schemaDerive";
