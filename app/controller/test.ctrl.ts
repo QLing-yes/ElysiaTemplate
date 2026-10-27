@@ -2,6 +2,7 @@ import { eq } from "drizzle-orm";
 import { t } from "elysia";
 import { post, user } from "@/app/model";
 import { controller } from "@/app/plugins/index.plug";
+import * as Schema from "@/app/common/schemaDerive";
 
 export default $g.ctrl((app) =>
   app
@@ -23,14 +24,16 @@ export default $g.ctrl((app) =>
       "test",
       {
         body: t.Object({ a: t.Number() }),
-        // res: t.Union([t.Number(), t.Null()]),
-        res: t.Number(),
+
+        // res: t.Number(),// Type validation has no effect, run-time normal validation
+        // Equality ↑↓
+        // response: Schema.ResSchemaFun(t.Number()),// normal
       },
       ({ body }) => {
         if (body.a > 2) {
           return $g.error("no > 2");
         }
-        return $g.success(`${body.a + 1}test`);
+        return $g.success(`${body.a + 1}test`); // Test type error
       },
     )
     // 测试成功响应
