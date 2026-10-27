@@ -13,37 +13,36 @@ Project/
 ├── public/                   # 静态资源（自动路由）
 ├── app/
 │   ├── common/
-│   │   └── index.ts          # 全局模块 (注册到全局"$g", 仅`controller`中使用)
-│   │   └── schemas.ts        # 数据模型 (自动使用elysia.model注册)
+│   │   └── index.ts          # 全局模块 (注册到全局`$g`, 仅`controller`中使用)
+│   │   └── schemas.ts        # 数据模型 (这里导出的模型都将使用`elysia.model()`注册)
 │   │   └── schemaDerive.ts   # 数据模型的派生类型和方法
-│   ├── controller/           # 控制器层 (自动加载`ctrl.ts`结尾的文件,改变时自动更新路由)
+│   ├── controller/           # 控制器层 (自动注册`ctrl.ts`结尾的文件为路由，自动更新)
 │   ├── lib/
-│   │   ├── error.ts          # 全局错误与进程事件捕获记录 (同步模式)
+│   │   ├── error.ts          # 进程异常事件捕获记录 (同步模式)
 │   │   ├── logger.ts         # 日志库 (默认异步模式)
 │   │   ├── drizzle.ts        # Drizzle 客户端
 │   │   └── redis.ts          # Redis 客户端
-│   ├── model/                # Drizzle 数据模型目录
+│   ├── model/                # Drizzle 数据模型目录 (`.mold.ts`结尾的文件内导出的具名`schema`将自动使用`elysia.model()`注册)
 │   ├── plugins/
 │   │   ├── index.plug.ts     # 全局插件
 │   │   └── macro.plug.ts     # 宏插件
 │   │   └── controller.plug.ts # 控制器插件
 │   │   └── schemas.plug.ts   # 数据模型注册插件
 │   ├── utils/                # 工具函数
-│   └── cluster.ts            # 单机多进程集群模式入口
+│   └── cluster.ts            # 单机多进程集群模式入口（仅Linux生效）
 │   └── index.ts              # 应用入口
 ├── logs/
 ├── test/                     # Eden 测试目录
 ├── system/                  # 辅助脚本目录（无需关心）
 │   └── script/
 │       ├── index.ts          # 生成脚本
-│       ├── menu.ts           # 命令菜单
-│       └── routes.ts         # 路由生成工具
+│       ├── menu.ts           # 交互式命令菜单
+│       └── routes.ts         # 路由 生成工具
+│       └── batchExport.ts    # 批量导出文件 生成工具
 |── .env                      # 配置文件
 |── drizzle.config.ts         # drizzle 配置
 ...
 ```
-
-- 当然，你也可以直接下载本仓库使用。
 
 ### 请按以下步骤配置 Drizzle
 
