@@ -21,12 +21,12 @@ export const outdir = root;
  */
 export async function build(
   target: Bun.Build.CompileTarget,
-  outDir: string = outdir,
-  fileName: string = target,
+  outDir?: string,
+  fileName?: string,
 ) {
   console.log("\n\x1b[33m🔄 构建中...\x1b[0m\n");
   // 输出关键路径，便于排查入口解析问题
-  const outfile = join(outDir, fileName);
+  const outfile = join(outDir || outdir, fileName || target);
   // 判断是否为 Windows 平台，用于条件应用 Windows 专属配置
   // const isWindows = target.includes("windows");
   await Bun.build({

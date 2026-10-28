@@ -1,4 +1,4 @@
-//auto generated
+// auto generated
 import Elysia from "elysia";
 import * as $g from "@/app/common";
 import mod_0 from "app/controller/test.ctrl.ts";
