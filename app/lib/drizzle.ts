@@ -2,7 +2,7 @@ import { drizzle as orm } from "drizzle-orm/mysql2";
 import mysql from "mysql2/promise";
 import { logger } from "@/app/lib/logger";
 import { relations } from "@/app/model/relations";
-import { Manifest } from "elysia";
+import { inAotBuild } from "elysia";
 
 const pool = mysql.createPool({
   uri: process.env.DATABASE_URL!,
@@ -21,7 +21,7 @@ function registerEvent() {
     logger.warn("[drizzle] connection pool is full");
   });
   // AOT 构建期 dry-run 不建立真实连接，仅运行时校验连接
-  if (!Manifest.isCapturing()) {
+  if (!inAotBuild()) {
     // 启动时验证连接是否正常
     pool
       .getConnection()

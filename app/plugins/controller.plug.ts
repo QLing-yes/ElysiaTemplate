@@ -8,7 +8,7 @@ import plug_schemas from "@/app/plugins/schemas.plug";
 export default new Elysia({ name: String($g.counter.n) })
   .use(plug_schemas)
   .use(plug_macro)
-  .beforeHandle((p) => {
+  .onBeforeHandle((p) => {
     const mate = Object.fromEntries(
       Object.entries({
         rid: p.rid,
@@ -27,7 +27,7 @@ export default new Elysia({ name: String($g.counter.n) })
   // .afterResponse(({ set, request, ...p }) => {
   // 	logger.info(`[response] ${request.method} ${p.route || p.path} ${set.status}`);
   // })
-  .error("global", ({ error, request, set, ...p }) => {
+  .onError("global", ({ error, request, set, ...p }) => {
     const err = error instanceof Error ? error : new Error(String(error));
     const errCode = error instanceof ElysiaError ? error.code : err.name;
     // 人性化验证器错误信息
