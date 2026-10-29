@@ -2,10 +2,10 @@ import { eq } from "drizzle-orm";
 import { t } from "elysia";
 import { post, user } from "@/app/model";
 import { controller } from "@/app/plugins/index.plug";
-import * as Schema from "@/app/common/schemaDerive";
 
 export default $g.ctrl((app) =>
   app
+    .post("/", () => "ok")
     // 全部路由
     .post(
       "routers",
@@ -27,14 +27,13 @@ export default $g.ctrl((app) =>
 
         // res: t.Number(),// Type validation has no effect, run-time normal validation
         // Equality ↑↓
-        // response: Schema.ResSchemaFun(t.Number()),// normal validation
         // response: $g.res(t.Number()),
       },
       ({ body }) => {
         if (body.a > 2) {
           return $g.error("no > 2");
         }
-        return $g.success(1); // Test type error
+        return $g.success("1"); // Test type error
       },
     )
     // 测试成功响应
@@ -97,15 +96,19 @@ export default $g.ctrl((app) =>
     })
 
     /** 按ID查询用户 */
-    .get("user/detail/:id", { response: $g.res(t.Any()) }, async ({ params }) => {
-      const row = await $g.db.query.user.findFirst({
-        where: { id: +params.id },
-      });
-      if (!row) {
-        return $g.error("用户不存在", 404);
-      }
-      return $g.success(row);
-    })
+    .get(
+      "user/detail/:id",
+      { response: $g.res(t.Any()) },
+      async ({ params }) => {
+        const row = await $g.db.query.user.findFirst({
+          where: { id: +params.id },
+        });
+        if (!row) {
+          return $g.error("用户不存在", 404);
+        }
+        return $g.success(row);
+      },
+    )
 
     /** 更新用户 */
     .put(
@@ -130,15 +133,19 @@ export default $g.ctrl((app) =>
     )
 
     /** 删除用户 */
-    .delete("user/delete/:id", { response: $g.res(t.Any()) }, async ({ params }) => {
-      const [{ affectedRows }] = await $g.db
-        .delete(user)
-        .where(eq(user.id, +params.id));
-      if (affectedRows === 0) {
-        return $g.error("用户不存在", 404);
-      }
-      return $g.success(null, "删除成功");
-    })
+    .delete(
+      "user/delete/:id",
+      { response: $g.res(t.Any()) },
+      async ({ params }) => {
+        const [{ affectedRows }] = await $g.db
+          .delete(user)
+          .where(eq(user.id, +params.id));
+        if (affectedRows === 0) {
+          return $g.error("用户不存在", 404);
+        }
+        return $g.success(null, "删除成功");
+      },
+    )
 
     /** 新增文章 */
     .post(
