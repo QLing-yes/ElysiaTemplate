@@ -20,7 +20,6 @@
     "@elysia/eden": "next",
     "@elysia/openapi": "next",
     "@elysia/static": "next",
-    "@webui-dev/bun-webui": "^2.5.7",
     "drizzle-orm": "1.0.0-rc.5-5935859",
     "elysia": "next",
     "exact-mirror": "^1.2.6",
