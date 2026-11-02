@@ -40,7 +40,7 @@ if (!port) {
       cmd: ["bun", `${import.meta.dir}/index.ts`],
       stdout: "inherit",
       stderr: "inherit",
-      stdin: "ignore"
+      stdin: "inherit"
     });
 
     workers[index] = worker;
