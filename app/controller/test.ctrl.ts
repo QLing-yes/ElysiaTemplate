@@ -1,7 +1,7 @@
 import { eq } from "drizzle-orm";
 import { t } from "elysia";
 import { post, user } from "@/app/model";
-import { controller } from "@/app/plugins/index.plug";
+import { routes_ctrl } from "@/app/plugins/index.plug";
 
 export default $g.ctrl((app) =>
   app
@@ -13,7 +13,7 @@ export default $g.ctrl((app) =>
         response: $g.res(t.Array(t.String())),
       },
       () => {
-        const list: string[] = controller.routes.map(
+        const list: string[] = routes_ctrl.routes.map(
           (item) => `[${item.method}]${item.path}`,
         );
         return $g.success(list);
